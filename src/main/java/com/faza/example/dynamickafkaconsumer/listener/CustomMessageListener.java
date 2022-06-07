@@ -15,7 +15,7 @@ public abstract class CustomMessageListener {
     @Autowired
     private KafkaProperties kafkaProperties;
 
-    public abstract KafkaListenerEndpoint createKafkaListenerEndpoint(String name, String topic);
+    public abstract KafkaListenerEndpoint createKafkaListenerEndpoint(String name, String topic) throws NoSuchMethodException;
 
     protected MethodKafkaListenerEndpoint<String, String> createDefaultMethodKafkaListenerEndpoint(String consumerId,
                                                                                                    String topic) {

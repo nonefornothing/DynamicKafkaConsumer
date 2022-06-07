@@ -1,5 +1,6 @@
 package com.faza.example.dynamickafkaconsumer.listener;
 
+import com.faza.example.dynamickafkaconsumer.util.Acknowledgement;
 import lombok.SneakyThrows;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.kafka.clients.consumer.ConsumerRecord;
@@ -17,12 +18,12 @@ import java.util.concurrent.CompletableFuture;
 public class MyCustomMessageListener extends CustomMessageListener {
 
     @Override
-    @SneakyThrows
-    public KafkaListenerEndpoint createKafkaListenerEndpoint(String name, String topic) {
+    public KafkaListenerEndpoint createKafkaListenerEndpoint(String name, String topic) throws NoSuchMethodException {
         MethodKafkaListenerEndpoint<String, String> kafkaListenerEndpoint =
                 createDefaultMethodKafkaListenerEndpoint(name, topic);
         kafkaListenerEndpoint.setBean(new MyMessageListener());
-        kafkaListenerEndpoint.setMethod(MyMessageListener.class.getMethod("onMessage"));
+//        kafkaListenerEndpoint.setMethod(MyMessageListener.class.getMethod("onMessage"));
+        kafkaListenerEndpoint.setMethod(MyMessageListener.class.getMethod("onMessage",ConsumerRecord.class));
         return kafkaListenerEndpoint;
     }
 
@@ -30,6 +31,7 @@ public class MyCustomMessageListener extends CustomMessageListener {
     private static class MyMessageListener implements AcknowledgingMessageListener<String, String> {
 
         public void onMessage() {
+            log.info("Masuk pak eko");
         }
 
         @Override
@@ -73,9 +75,6 @@ public class MyCustomMessageListener extends CustomMessageListener {
 //        }
 
     }
-
-
-
 
 
 //    @Slf4j
