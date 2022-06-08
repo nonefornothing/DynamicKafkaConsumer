@@ -31,14 +31,6 @@ public class CustomKafkaListenerRegistrar implements InitializingBean {
                 .forEach(this::registerCustomKafkaListener);
     }
 
-    public void CustomKafkaListenerRegistrar(){
-
-    }
-
-    public void onMessage(){
-
-    }
-
     public void registerCustomKafkaListener(String name, CustomKafkaListenerProperty customKafkaListenerProperty) {
         this.registerCustomKafkaListener(name, customKafkaListenerProperty, false);
     }
@@ -46,10 +38,11 @@ public class CustomKafkaListenerRegistrar implements InitializingBean {
     @SneakyThrows
     public void registerCustomKafkaListener(String name, CustomKafkaListenerProperty customKafkaListenerProperty,
                                             boolean startImmediately) {
-        String listenerClass = String.join(".", CustomKafkaListenerRegistrar.class.getPackageName(),
-                customKafkaListenerProperty.getListenerClass());
+//        String listenerClass = String.join(".", CustomKafkaListenerRegistrar.class.getName(),
+//                customKafkaListenerProperty.getListenerClass());
         CustomMessageListener customMessageListener =
-                (CustomMessageListener) beanFactory.getBean(Class.forName(listenerClass));
+                (CustomMessageListener) beanFactory.getBean(Class.forName("com.faza.example.dynamickafkaconsumer.listener.MyCustomMessageListener"));
+
         kafkaListenerEndpointRegistry.registerListenerContainer(
                 customMessageListener.createKafkaListenerEndpoint(name, customKafkaListenerProperty.getTopic()),
                 kafkaListenerContainerFactory, startImmediately);

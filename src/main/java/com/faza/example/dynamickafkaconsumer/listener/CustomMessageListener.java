@@ -30,16 +30,16 @@ public abstract class CustomMessageListener {
     }
 
     private String getConsumerId(String name) {
-        if (isBlank(name)) {
+        if (name.isEmpty()) {
             return CustomMessageListener.class.getCanonicalName() + "#" + NUMBER_OF_LISTENERS++;
         } else {
             return name;
         }
     }
-
-    private boolean isBlank(String string) {
-        return Optional.ofNullable(string)
-                .map(String::isBlank)
-                .orElse(true);
-    }
+//
+//    private boolean isBlank(String string) {
+//        return Optional.ofNullable(string)
+//                .map(String::isBlank)
+//                .orElse(true);
+//    }
 }
