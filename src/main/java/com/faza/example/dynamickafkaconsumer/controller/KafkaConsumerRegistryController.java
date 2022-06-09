@@ -1,6 +1,7 @@
 package com.faza.example.dynamickafkaconsumer.controller;
 
-import com.faza.example.dynamickafkaconsumer.listener.CustomKafkaListenerRegistrar;
+import com.faza.example.dynamickafkaconsumer.container.KafkaContainerRegistration;
+//import com.faza.example.dynamickafkaconsumer.listener.CustomKafkaListenerRegistrar;
 import com.faza.example.dynamickafkaconsumer.model.CustomKafkaListenerProperty;
 import com.faza.example.dynamickafkaconsumer.model.KafkaConsumerAssignmentResponse;
 import com.faza.example.dynamickafkaconsumer.model.KafkaConsumerResponse;
@@ -31,8 +32,10 @@ public class KafkaConsumerRegistryController {
     @Autowired
     private KafkaListenerEndpointRegistry kafkaListenerEndpointRegistry;
 
-    @Autowired
-    private CustomKafkaListenerRegistrar customKafkaListenerRegistrar;
+//    @Autowired
+//    private CustomKafkaListenerRegistrar customKafkaListenerRegistrar;
+
+    private KafkaContainerRegistration kafkaContainerRegistration;
 
     @GetMapping
     public List<KafkaConsumerResponse> getConsumerIds() {
@@ -44,14 +47,16 @@ public class KafkaConsumerRegistryController {
 
     @PostMapping(path = "/create")
     @ResponseStatus(HttpStatus.CREATED)
-    public void createConsumer(@RequestParam String topic, @RequestParam String consumerId,
+    public void createConsumer(@RequestParam String topic, @RequestParam String consumerId, @RequestParam(required = false) int concurrency,
                                @RequestParam(required = false) boolean startImmediately) {
-        customKafkaListenerRegistrar.registerCustomKafkaListener(consumerId,
-                CustomKafkaListenerProperty.builder()
-                        .topic(topic)
-                        .listenerClass("MyCustomMessageListener")
-                        .build(),
-                startImmediately);
+        kafkaContainerRegistration.registerListenerContainer(topic,consumerId,consumerId,startImmediately,concurrency);
+//        customKafkaListenerRegistrar.registerCustomKafkaListener(consumerId,
+//                CustomKafkaListenerProperty.builder()
+//                        .topic(topic)
+//                        .listenerClass("MyCustomMessageListener")
+//                        .build(),
+//                startImmediately);
+
     }
 
     @PostMapping(path = "/activate")
