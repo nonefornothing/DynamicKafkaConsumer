@@ -6,7 +6,7 @@ import org.springframework.kafka.listener.AcknowledgingMessageListener;
 import org.springframework.kafka.support.Acknowledgment;
 
 @Slf4j
-public class CustomListener implements AcknowledgingMessageListener {
+public class CustomListener implements AcknowledgingMessageListener<String,String>{
 
 
     /**
@@ -15,7 +15,7 @@ public class CustomListener implements AcknowledgingMessageListener {
      * @param data           the data to be processed.
      * @param acknowledgment the acknowledgment.
      */
-    @Override
+//    @Override
     public void onMessage(ConsumerRecord data, Acknowledgment acknowledgment) {
         log.info("Data received : " + data.value());
         acknowledgment.acknowledge();
