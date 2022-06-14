@@ -2,7 +2,6 @@ package com.faza.example.dynamickafkaconsumer.container;
 import com.faza.example.dynamickafkaconsumer.model.Request;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.kafka.config.ConcurrentKafkaListenerContainerFactory;
 import org.springframework.kafka.listener.ConcurrentMessageListenerContainer;
 import org.springframework.stereotype.Component;
 
@@ -23,10 +22,8 @@ public class CustomKafkaContainerRegistration {
         container.setConcurrency(concurrentConsumer);
         container.setAutoStartup(request.getConsumerActivation());
         container.getContainers();
+        container.setBeanName(request.getConsumerId());
         container.start();
-//        container.stop();
-//        container.pause();
-//        container.resume();
     }
 
 

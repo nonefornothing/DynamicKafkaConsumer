@@ -1,5 +1,7 @@
 package com.faza.example.dynamickafkaconsumer.controller;
 
+import com.faza.example.dynamickafkaconsumer.container.CustomConsumerFactory;
+import com.faza.example.dynamickafkaconsumer.container.CustomContainerProperties;
 import com.faza.example.dynamickafkaconsumer.container.CustomKafkaContainerRegistration;
 import com.faza.example.dynamickafkaconsumer.model.KafkaConsumerAssignmentResponse;
 import com.faza.example.dynamickafkaconsumer.model.KafkaConsumerResponse;
@@ -7,6 +9,7 @@ import com.faza.example.dynamickafkaconsumer.model.Request;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.kafka.common.TopicPartition;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpStatus;
 import org.springframework.kafka.config.KafkaListenerEndpointRegistry;
 import org.springframework.kafka.listener.ConcurrentMessageListenerContainer;
@@ -28,6 +31,8 @@ public class KafkaConsumerRegistryController {
 
     @Autowired
     private CustomKafkaContainerRegistration customKafkaContainerRegistration;
+
+
 
     @GetMapping
     public List<KafkaConsumerResponse> getConsumerIds() {
