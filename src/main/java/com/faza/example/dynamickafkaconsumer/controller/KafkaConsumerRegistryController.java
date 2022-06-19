@@ -1,7 +1,5 @@
 package com.faza.example.dynamickafkaconsumer.controller;
 
-import com.faza.example.dynamickafkaconsumer.container.CustomConsumerFactory;
-import com.faza.example.dynamickafkaconsumer.container.CustomContainerProperties;
 import com.faza.example.dynamickafkaconsumer.container.CustomKafkaContainerRegistration;
 import com.faza.example.dynamickafkaconsumer.model.KafkaConsumerAssignmentResponse;
 import com.faza.example.dynamickafkaconsumer.model.KafkaConsumerResponse;
@@ -9,16 +7,13 @@ import com.faza.example.dynamickafkaconsumer.model.Request;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.kafka.common.TopicPartition;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpStatus;
 import org.springframework.kafka.config.KafkaListenerEndpointRegistry;
 import org.springframework.kafka.listener.ConcurrentMessageListenerContainer;
 import org.springframework.kafka.listener.MessageListenerContainer;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.List;
-import java.util.Objects;
-import java.util.Optional;
+import java.util.*;
 import java.util.stream.Collectors;
 
 @Slf4j
@@ -32,11 +27,21 @@ public class KafkaConsumerRegistryController {
     @Autowired
     private CustomKafkaContainerRegistration customKafkaContainerRegistration;
 
-
-
     @GetMapping
     public List<KafkaConsumerResponse> getConsumerIds() {
-        return kafkaListenerEndpointRegistry.getListenerContainerIds()
+        Set<String> hash_Set = new HashSet<String>();
+
+        // Adding elements to the Set
+        // using add() method
+        hash_Set.add("Geeks");
+        hash_Set.add("For");
+        hash_Set.add("Geeks");
+        hash_Set.add("Example");
+        hash_Set.add("Set");
+
+        // Printing elements of HashSet object
+        System.out.println(hash_Set);
+        return customKafkaContainerRegistration.getAllIds()
                 .stream()
                 .map(this::createKafkaConsumerResponse)
                 .collect(Collectors.toList());
@@ -46,12 +51,13 @@ public class KafkaConsumerRegistryController {
     @ResponseStatus(HttpStatus.CREATED)
     public void createConsumer(@RequestBody Request request) {
         customKafkaContainerRegistration.registerCustomKafkaContainer(request);
+//        customKafkaContainerRegistration.getContainer("sss").
     }
 
     @PostMapping(path = "/activate")
     @ResponseStatus(HttpStatus.ACCEPTED)
     public void activateConsumer(@RequestParam String consumerId) {
-        ConcurrentMessageListenerContainer listenerContainer = (ConcurrentMessageListenerContainer) kafkaListenerEndpointRegistry.getListenerContainer(consumerId);
+        MessageListenerContainer listenerContainer = customKafkaContainerRegistration.getContainer(consumerId);
         if (Objects.isNull(listenerContainer)) {
             throw new RuntimeException(String.format("Consumer with id %s is not found", consumerId));
         } else if (listenerContainer.isRunning()) {
@@ -65,7 +71,7 @@ public class KafkaConsumerRegistryController {
     @PostMapping(path = "/pause")
     @ResponseStatus(HttpStatus.ACCEPTED)
     public void pauseConsumer(@RequestParam String consumerId) {
-        MessageListenerContainer listenerContainer = kafkaListenerEndpointRegistry.getListenerContainer(consumerId);
+        MessageListenerContainer listenerContainer = customKafkaContainerRegistration.getContainer(consumerId);
         if (Objects.isNull(listenerContainer)) {
             throw new RuntimeException(String.format("Consumer with id %s is not found", consumerId));
         } else if (!listenerContainer.isRunning()) {
@@ -83,7 +89,7 @@ public class KafkaConsumerRegistryController {
     @PostMapping(path = "/resume")
     @ResponseStatus(HttpStatus.ACCEPTED)
     public void resumeConsumer(@RequestParam String consumerId) {
-        MessageListenerContainer listenerContainer = kafkaListenerEndpointRegistry.getListenerContainer(consumerId);
+        MessageListenerContainer listenerContainer = customKafkaContainerRegistration.getContainer(consumerId);
         if (Objects.isNull(listenerContainer)) {
             throw new RuntimeException(String.format("Consumer with id %s is not found", consumerId));
         } else if (!listenerContainer.isRunning()) {
@@ -99,7 +105,7 @@ public class KafkaConsumerRegistryController {
     @PostMapping(path = "/deactivate")
     @ResponseStatus(HttpStatus.ACCEPTED)
     public void deactivateConsumer(@RequestParam String consumerId) {
-        ConcurrentMessageListenerContainer listenerContainer = (ConcurrentMessageListenerContainer) kafkaListenerEndpointRegistry.getListenerContainer(consumerId);
+        MessageListenerContainer listenerContainer = customKafkaContainerRegistration.getContainer(consumerId);
         if (Objects.isNull(listenerContainer)) {
             throw new RuntimeException(String.format("Consumer with id %s is not found", consumerId));
         } else if (!listenerContainer.isRunning()) {
@@ -112,7 +118,7 @@ public class KafkaConsumerRegistryController {
 
     private KafkaConsumerResponse createKafkaConsumerResponse(String consumerId) {
         MessageListenerContainer listenerContainer =
-                kafkaListenerEndpointRegistry.getListenerContainer(consumerId);
+                customKafkaContainerRegistration.getContainer(consumerId);
         return KafkaConsumerResponse.builder()
                 .consumerId(consumerId)
                 .groupId(listenerContainer.getGroupId())

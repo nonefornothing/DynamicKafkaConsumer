@@ -4,7 +4,11 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="ae1cc39a-d7e8-457c-9124-34393dcb2569" name="Default Changelist" comment="" />
+    <list default="true" id="ae1cc39a-d7e8-457c-9124-34393dcb2569" name="Default Changelist" comment="">
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/faza/example/dynamickafkaconsumer/container/CustomKafkaContainerRegistration.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/faza/example/dynamickafkaconsumer/container/CustomKafkaContainerRegistration.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/faza/example/dynamickafkaconsumer/controller/KafkaConsumerRegistryController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/faza/example/dynamickafkaconsumer/controller/KafkaConsumerRegistryController.java" afterDir="false" />
+    </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -82,27 +86,27 @@
       <breakpoints>
         <line-breakpoint enabled="true" type="java-line">
           <url>file://$PROJECT_DIR$/src/main/java/com/faza/example/dynamickafkaconsumer/container/CustomKafkaContainerRegistration.java</url>
-          <line>21</line>
+          <line>30</line>
           <option name="timeStamp" value="7" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="java-line">
           <url>file://$PROJECT_DIR$/src/main/java/com/faza/example/dynamickafkaconsumer/container/CustomKafkaContainerRegistration.java</url>
-          <line>22</line>
+          <line>31</line>
           <option name="timeStamp" value="9" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="java-line">
           <url>file://$PROJECT_DIR$/src/main/java/com/faza/example/dynamickafkaconsumer/container/CustomKafkaContainerRegistration.java</url>
-          <line>18</line>
+          <line>27</line>
           <option name="timeStamp" value="11" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="java-line">
           <url>file://$PROJECT_DIR$/src/main/java/com/faza/example/dynamickafkaconsumer/container/CustomKafkaContainerRegistration.java</url>
-          <line>19</line>
+          <line>28</line>
           <option name="timeStamp" value="12" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="java-line">
           <url>file://$PROJECT_DIR$/src/main/java/com/faza/example/dynamickafkaconsumer/container/CustomKafkaContainerRegistration.java</url>
-          <line>20</line>
+          <line>29</line>
           <option name="timeStamp" value="13" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="java-line">
@@ -137,283 +141,299 @@
         </line-breakpoint>
         <line-breakpoint enabled="true" type="java-line">
           <url>file://$PROJECT_DIR$/src/main/java/com/faza/example/dynamickafkaconsumer/controller/KafkaConsumerRegistryController.java</url>
-          <line>38</line>
+          <line>43</line>
           <option name="timeStamp" value="29" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="java-line">
           <url>file://$PROJECT_DIR$/src/main/java/com/faza/example/dynamickafkaconsumer/controller/KafkaConsumerRegistryController.java</url>
-          <line>39</line>
+          <line>44</line>
           <option name="timeStamp" value="30" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="java-line">
           <url>file://$PROJECT_DIR$/src/main/java/com/faza/example/dynamickafkaconsumer/controller/KafkaConsumerRegistryController.java</url>
-          <line>40</line>
+          <line>45</line>
           <option name="timeStamp" value="31" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="java-line">
           <url>file://$PROJECT_DIR$/src/main/java/com/faza/example/dynamickafkaconsumer/controller/KafkaConsumerRegistryController.java</url>
-          <line>41</line>
+          <line>46</line>
           <option name="timeStamp" value="32" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="java-line">
           <url>file://$PROJECT_DIR$/src/main/java/com/faza/example/dynamickafkaconsumer/controller/KafkaConsumerRegistryController.java</url>
-          <line>113</line>
+          <line>119</line>
           <option name="timeStamp" value="33" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="java-line">
           <url>file://$PROJECT_DIR$/src/main/java/com/faza/example/dynamickafkaconsumer/controller/KafkaConsumerRegistryController.java</url>
-          <line>115</line>
-          <option name="timeStamp" value="34" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" type="java-line">
-          <url>file://$PROJECT_DIR$/src/main/java/com/faza/example/dynamickafkaconsumer/controller/KafkaConsumerRegistryController.java</url>
-          <line>117</line>
+          <line>123</line>
           <option name="timeStamp" value="35" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="java-line">
           <url>file://$PROJECT_DIR$/src/main/java/com/faza/example/dynamickafkaconsumer/controller/KafkaConsumerRegistryController.java</url>
-          <line>116</line>
+          <line>122</line>
           <option name="timeStamp" value="36" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="java-line">
           <url>file://$PROJECT_DIR$/src/main/java/com/faza/example/dynamickafkaconsumer/controller/KafkaConsumerRegistryController.java</url>
-          <line>114</line>
-          <option name="timeStamp" value="37" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" type="java-line">
-          <url>file://$PROJECT_DIR$/src/main/java/com/faza/example/dynamickafkaconsumer/controller/KafkaConsumerRegistryController.java</url>
-          <line>118</line>
+          <line>124</line>
           <option name="timeStamp" value="38" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="java-line">
           <url>file://$PROJECT_DIR$/src/main/java/com/faza/example/dynamickafkaconsumer/controller/KafkaConsumerRegistryController.java</url>
-          <line>120</line>
+          <line>126</line>
           <option name="timeStamp" value="39" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="java-line">
           <url>file://$PROJECT_DIR$/src/main/java/com/faza/example/dynamickafkaconsumer/controller/KafkaConsumerRegistryController.java</url>
-          <line>119</line>
+          <line>125</line>
           <option name="timeStamp" value="40" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="java-line">
           <url>file://$PROJECT_DIR$/src/main/java/com/faza/example/dynamickafkaconsumer/controller/KafkaConsumerRegistryController.java</url>
-          <line>121</line>
+          <line>127</line>
           <option name="timeStamp" value="41" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="java-line">
           <url>file://$PROJECT_DIR$/src/main/java/com/faza/example/dynamickafkaconsumer/controller/KafkaConsumerRegistryController.java</url>
-          <line>129</line>
+          <line>135</line>
           <option name="timeStamp" value="42" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="java-line">
           <url>file://$PROJECT_DIR$/src/main/java/com/faza/example/dynamickafkaconsumer/controller/KafkaConsumerRegistryController.java</url>
-          <line>130</line>
+          <line>136</line>
           <option name="timeStamp" value="43" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="java-line">
           <url>file://$PROJECT_DIR$/src/main/java/com/faza/example/dynamickafkaconsumer/controller/KafkaConsumerRegistryController.java</url>
-          <line>131</line>
+          <line>137</line>
           <option name="timeStamp" value="44" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="java-line">
           <url>file://$PROJECT_DIR$/src/main/java/com/faza/example/dynamickafkaconsumer/controller/KafkaConsumerRegistryController.java</url>
-          <line>132</line>
+          <line>138</line>
           <option name="timeStamp" value="45" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="java-line">
           <url>file://$PROJECT_DIR$/src/main/java/com/faza/example/dynamickafkaconsumer/controller/KafkaConsumerRegistryController.java</url>
-          <line>133</line>
+          <line>139</line>
           <option name="timeStamp" value="46" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="java-line">
           <url>file://$PROJECT_DIR$/src/main/java/com/faza/example/dynamickafkaconsumer/controller/KafkaConsumerRegistryController.java</url>
-          <line>51</line>
+          <line>57</line>
           <option name="timeStamp" value="50" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="java-line">
           <url>file://$PROJECT_DIR$/src/main/java/com/faza/example/dynamickafkaconsumer/controller/KafkaConsumerRegistryController.java</url>
-          <line>58</line>
+          <line>64</line>
           <option name="timeStamp" value="51" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="java-line">
           <url>file://$PROJECT_DIR$/src/main/java/com/faza/example/dynamickafkaconsumer/controller/KafkaConsumerRegistryController.java</url>
-          <line>57</line>
+          <line>63</line>
           <option name="timeStamp" value="52" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="java-line">
           <url>file://$PROJECT_DIR$/src/main/java/com/faza/example/dynamickafkaconsumer/controller/KafkaConsumerRegistryController.java</url>
-          <line>59</line>
+          <line>65</line>
           <option name="timeStamp" value="53" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="java-line">
           <url>file://$PROJECT_DIR$/src/main/java/com/faza/example/dynamickafkaconsumer/controller/KafkaConsumerRegistryController.java</url>
-          <line>61</line>
+          <line>67</line>
           <option name="timeStamp" value="54" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="java-line">
           <url>file://$PROJECT_DIR$/src/main/java/com/faza/example/dynamickafkaconsumer/controller/KafkaConsumerRegistryController.java</url>
-          <line>60</line>
+          <line>66</line>
           <option name="timeStamp" value="55" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="java-line">
           <url>file://$PROJECT_DIR$/src/main/java/com/faza/example/dynamickafkaconsumer/controller/KafkaConsumerRegistryController.java</url>
-          <line>67</line>
+          <line>73</line>
           <option name="timeStamp" value="57" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="java-line">
           <url>file://$PROJECT_DIR$/src/main/java/com/faza/example/dynamickafkaconsumer/controller/KafkaConsumerRegistryController.java</url>
-          <line>70</line>
+          <line>76</line>
           <option name="timeStamp" value="59" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="java-line">
           <url>file://$PROJECT_DIR$/src/main/java/com/faza/example/dynamickafkaconsumer/controller/KafkaConsumerRegistryController.java</url>
-          <line>68</line>
+          <line>74</line>
           <option name="timeStamp" value="60" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="java-line">
           <url>file://$PROJECT_DIR$/src/main/java/com/faza/example/dynamickafkaconsumer/controller/KafkaConsumerRegistryController.java</url>
-          <line>69</line>
+          <line>75</line>
           <option name="timeStamp" value="61" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="java-line">
           <url>file://$PROJECT_DIR$/src/main/java/com/faza/example/dynamickafkaconsumer/controller/KafkaConsumerRegistryController.java</url>
-          <line>71</line>
+          <line>77</line>
           <option name="timeStamp" value="62" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="java-line">
           <url>file://$PROJECT_DIR$/src/main/java/com/faza/example/dynamickafkaconsumer/controller/KafkaConsumerRegistryController.java</url>
-          <line>72</line>
+          <line>78</line>
           <option name="timeStamp" value="63" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="java-line">
           <url>file://$PROJECT_DIR$/src/main/java/com/faza/example/dynamickafkaconsumer/controller/KafkaConsumerRegistryController.java</url>
-          <line>73</line>
+          <line>79</line>
           <option name="timeStamp" value="64" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="java-line">
           <url>file://$PROJECT_DIR$/src/main/java/com/faza/example/dynamickafkaconsumer/controller/KafkaConsumerRegistryController.java</url>
-          <line>74</line>
+          <line>80</line>
           <option name="timeStamp" value="65" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="java-line">
           <url>file://$PROJECT_DIR$/src/main/java/com/faza/example/dynamickafkaconsumer/controller/KafkaConsumerRegistryController.java</url>
-          <line>75</line>
+          <line>81</line>
           <option name="timeStamp" value="66" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="java-line">
           <url>file://$PROJECT_DIR$/src/main/java/com/faza/example/dynamickafkaconsumer/controller/KafkaConsumerRegistryController.java</url>
-          <line>76</line>
+          <line>82</line>
           <option name="timeStamp" value="67" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="java-line">
           <url>file://$PROJECT_DIR$/src/main/java/com/faza/example/dynamickafkaconsumer/controller/KafkaConsumerRegistryController.java</url>
-          <line>77</line>
+          <line>83</line>
           <option name="timeStamp" value="68" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="java-line">
           <url>file://$PROJECT_DIR$/src/main/java/com/faza/example/dynamickafkaconsumer/controller/KafkaConsumerRegistryController.java</url>
-          <line>78</line>
+          <line>84</line>
           <option name="timeStamp" value="69" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="java-line">
           <url>file://$PROJECT_DIR$/src/main/java/com/faza/example/dynamickafkaconsumer/controller/KafkaConsumerRegistryController.java</url>
-          <line>85</line>
+          <line>91</line>
           <option name="timeStamp" value="70" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="java-line">
           <url>file://$PROJECT_DIR$/src/main/java/com/faza/example/dynamickafkaconsumer/controller/KafkaConsumerRegistryController.java</url>
-          <line>86</line>
+          <line>92</line>
           <option name="timeStamp" value="71" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="java-line">
           <url>file://$PROJECT_DIR$/src/main/java/com/faza/example/dynamickafkaconsumer/controller/KafkaConsumerRegistryController.java</url>
-          <line>87</line>
+          <line>93</line>
           <option name="timeStamp" value="72" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="java-line">
           <url>file://$PROJECT_DIR$/src/main/java/com/faza/example/dynamickafkaconsumer/controller/KafkaConsumerRegistryController.java</url>
-          <line>88</line>
+          <line>94</line>
           <option name="timeStamp" value="73" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="java-line">
           <url>file://$PROJECT_DIR$/src/main/java/com/faza/example/dynamickafkaconsumer/controller/KafkaConsumerRegistryController.java</url>
-          <line>89</line>
+          <line>95</line>
           <option name="timeStamp" value="74" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="java-line">
           <url>file://$PROJECT_DIR$/src/main/java/com/faza/example/dynamickafkaconsumer/controller/KafkaConsumerRegistryController.java</url>
-          <line>90</line>
+          <line>96</line>
           <option name="timeStamp" value="75" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="java-line">
           <url>file://$PROJECT_DIR$/src/main/java/com/faza/example/dynamickafkaconsumer/controller/KafkaConsumerRegistryController.java</url>
-          <line>91</line>
+          <line>97</line>
           <option name="timeStamp" value="76" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="java-line">
           <url>file://$PROJECT_DIR$/src/main/java/com/faza/example/dynamickafkaconsumer/controller/KafkaConsumerRegistryController.java</url>
-          <line>92</line>
+          <line>98</line>
           <option name="timeStamp" value="77" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="java-line">
           <url>file://$PROJECT_DIR$/src/main/java/com/faza/example/dynamickafkaconsumer/controller/KafkaConsumerRegistryController.java</url>
-          <line>93</line>
+          <line>99</line>
           <option name="timeStamp" value="78" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="java-line">
           <url>file://$PROJECT_DIR$/src/main/java/com/faza/example/dynamickafkaconsumer/controller/KafkaConsumerRegistryController.java</url>
-          <line>94</line>
+          <line>100</line>
           <option name="timeStamp" value="79" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="java-line">
           <url>file://$PROJECT_DIR$/src/main/java/com/faza/example/dynamickafkaconsumer/controller/KafkaConsumerRegistryController.java</url>
-          <line>101</line>
+          <line>107</line>
           <option name="timeStamp" value="80" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="java-line">
           <url>file://$PROJECT_DIR$/src/main/java/com/faza/example/dynamickafkaconsumer/controller/KafkaConsumerRegistryController.java</url>
-          <line>104</line>
+          <line>110</line>
           <option name="timeStamp" value="81" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="java-line">
           <url>file://$PROJECT_DIR$/src/main/java/com/faza/example/dynamickafkaconsumer/controller/KafkaConsumerRegistryController.java</url>
-          <line>102</line>
+          <line>108</line>
           <option name="timeStamp" value="82" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="java-line">
           <url>file://$PROJECT_DIR$/src/main/java/com/faza/example/dynamickafkaconsumer/controller/KafkaConsumerRegistryController.java</url>
-          <line>105</line>
+          <line>111</line>
           <option name="timeStamp" value="83" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="java-line">
           <url>file://$PROJECT_DIR$/src/main/java/com/faza/example/dynamickafkaconsumer/controller/KafkaConsumerRegistryController.java</url>
-          <line>103</line>
+          <line>109</line>
           <option name="timeStamp" value="84" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="java-line">
           <url>file://$PROJECT_DIR$/src/main/java/com/faza/example/dynamickafkaconsumer/controller/KafkaConsumerRegistryController.java</url>
-          <line>106</line>
+          <line>112</line>
           <option name="timeStamp" value="87" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="java-line">
           <url>file://$PROJECT_DIR$/src/main/java/com/faza/example/dynamickafkaconsumer/controller/KafkaConsumerRegistryController.java</url>
-          <line>107</line>
+          <line>113</line>
           <option name="timeStamp" value="88" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="java-line">
           <url>file://$PROJECT_DIR$/src/main/java/com/faza/example/dynamickafkaconsumer/controller/KafkaConsumerRegistryController.java</url>
-          <line>108</line>
+          <line>114</line>
           <option name="timeStamp" value="89" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/src/main/java/com/faza/example/dynamickafkaconsumer/container/CustomKafkaContainerRegistration.java</url>
+          <line>32</line>
+          <option name="timeStamp" value="91" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/src/main/java/com/faza/example/dynamickafkaconsumer/container/CustomKafkaContainerRegistration.java</url>
+          <line>33</line>
+          <option name="timeStamp" value="92" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/src/main/java/com/faza/example/dynamickafkaconsumer/container/CustomKafkaContainerRegistration.java</url>
+          <line>34</line>
+          <option name="timeStamp" value="93" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="java-method">
           <url>file://$PROJECT_DIR$/src/main/java/com/faza/example/dynamickafkaconsumer/controller/KafkaConsumerRegistryController.java</url>
-          <line>66</line>
+          <line>72</line>
           <properties class="com.faza.example.dynamickafkaconsumer.controller.KafkaConsumerRegistryController" method="pauseConsumer">
             <option name="EMULATED" value="true" />
           </properties>
           <option name="timeStamp" value="56" />
         </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-field">
+          <url>file://$PROJECT_DIR$/src/main/java/com/faza/example/dynamickafkaconsumer/container/CustomKafkaContainerRegistration.java</url>
+          <line>22</line>
+          <properties field="registry" class="com.faza.example.dynamickafkaconsumer.container.CustomKafkaContainerRegistration" />
+          <option name="timeStamp" value="94" />
+        </line-breakpoint>
       </breakpoints>
     </breakpoint-manager>
+    <watches-manager>
+      <configuration name="Application">
+        <watch expression="request" />
+      </configuration>
+    </watches-manager>
   </component>
 </project>
