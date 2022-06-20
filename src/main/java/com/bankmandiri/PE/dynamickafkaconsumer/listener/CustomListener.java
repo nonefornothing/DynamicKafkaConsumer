@@ -1,4 +1,4 @@
-package com.faza.example.dynamickafkaconsumer.listener;
+package com.bankmandiri.PE.dynamickafkaconsumer.listener;
 
 import lombok.extern.slf4j.Slf4j;
 import org.apache.kafka.clients.consumer.ConsumerRecord;
@@ -15,7 +15,7 @@ public class CustomListener implements AcknowledgingMessageListener<String,Strin
      * @param data           the data to be processed.
      * @param acknowledgment the acknowledgment.
      */
-//    @Override
+    @Override
     public void onMessage(ConsumerRecord data, Acknowledgment acknowledgment) {
         log.info("Data received : " + data.value());
         acknowledgment.acknowledge();

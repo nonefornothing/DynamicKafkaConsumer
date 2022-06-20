@@ -1,9 +1,7 @@
-package com.faza.example.dynamickafkaconsumer.container;
+package com.bankmandiri.PE.dynamickafkaconsumer.container;
 
-import com.faza.example.dynamickafkaconsumer.listener.CustomListener;
-import org.springframework.context.annotation.Configuration;
+import com.bankmandiri.PE.dynamickafkaconsumer.listener.CustomListener;
 import org.springframework.kafka.listener.ContainerProperties;
-import org.springframework.stereotype.Component;
 
 public class CustomContainerProperties {
 

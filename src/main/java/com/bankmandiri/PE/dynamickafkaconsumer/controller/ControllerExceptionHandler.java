@@ -1,4 +1,4 @@
-package com.faza.example.dynamickafkaconsumer.controller;
+package com.bankmandiri.PE.dynamickafkaconsumer.controller;
 
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;

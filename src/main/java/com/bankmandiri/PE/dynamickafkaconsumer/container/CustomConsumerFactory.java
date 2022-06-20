@@ -1,4 +1,4 @@
-package com.faza.example.dynamickafkaconsumer.container;
+package com.bankmandiri.PE.dynamickafkaconsumer.container;
 
 import org.apache.kafka.clients.consumer.ConsumerConfig;
 import org.apache.kafka.common.serialization.StringDeserializer;

@@ -1,5 +1,5 @@
-package com.faza.example.dynamickafkaconsumer.container;
-import com.faza.example.dynamickafkaconsumer.model.Request;
+package com.bankmandiri.PE.dynamickafkaconsumer.container;
+import com.bankmandiri.PE.dynamickafkaconsumer.model.Request;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.kafka.listener.ConcurrentMessageListenerContainer;
@@ -40,10 +40,6 @@ public class CustomKafkaContainerRegistration {
 
     public MessageListenerContainer remove(String consumerId) {
         return this.registry.remove(consumerId);
-    }
-
-    public Map<String, MessageListenerContainer> getContainers(){
-        return this.registry;
     }
 
     public Set<String> getAllIds(){

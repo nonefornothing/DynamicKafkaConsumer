@@ -1,4 +1,4 @@
-package com.faza.example.dynamickafkaconsumer.model;
+package com.bankmandiri.PE.dynamickafkaconsumer.model;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
 import lombok.Builder;

@@ -1,15 +1,13 @@
-package com.faza.example.dynamickafkaconsumer.controller;
+package com.bankmandiri.PE.dynamickafkaconsumer.controller;
 
-import com.faza.example.dynamickafkaconsumer.container.CustomKafkaContainerRegistration;
-import com.faza.example.dynamickafkaconsumer.model.KafkaConsumerAssignmentResponse;
-import com.faza.example.dynamickafkaconsumer.model.KafkaConsumerResponse;
-import com.faza.example.dynamickafkaconsumer.model.Request;
+import com.bankmandiri.PE.dynamickafkaconsumer.container.CustomKafkaContainerRegistration;
+import com.bankmandiri.PE.dynamickafkaconsumer.model.KafkaConsumerAssignmentResponse;
+import com.bankmandiri.PE.dynamickafkaconsumer.model.Request;
+import com.bankmandiri.PE.dynamickafkaconsumer.model.KafkaConsumerResponse;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.kafka.common.TopicPartition;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
-import org.springframework.kafka.config.KafkaListenerEndpointRegistry;
-import org.springframework.kafka.listener.ConcurrentMessageListenerContainer;
 import org.springframework.kafka.listener.MessageListenerContainer;
 import org.springframework.web.bind.annotation.*;
 
@@ -18,29 +16,14 @@ import java.util.stream.Collectors;
 
 @Slf4j
 @RestController
-@RequestMapping(path = "/api/kafka/registry")
+@RequestMapping(path = "/consumer-management")
 public class KafkaConsumerRegistryController {
-
-    @Autowired
-    private KafkaListenerEndpointRegistry kafkaListenerEndpointRegistry;
 
     @Autowired
     private CustomKafkaContainerRegistration customKafkaContainerRegistration;
 
     @GetMapping
     public List<KafkaConsumerResponse> getConsumerIds() {
-        Set<String> hash_Set = new HashSet<String>();
-
-        // Adding elements to the Set
-        // using add() method
-        hash_Set.add("Geeks");
-        hash_Set.add("For");
-        hash_Set.add("Geeks");
-        hash_Set.add("Example");
-        hash_Set.add("Set");
-
-        // Printing elements of HashSet object
-        System.out.println(hash_Set);
         return customKafkaContainerRegistration.getAllIds()
                 .stream()
                 .map(this::createKafkaConsumerResponse)
@@ -51,7 +34,6 @@ public class KafkaConsumerRegistryController {
     @ResponseStatus(HttpStatus.CREATED)
     public void createConsumer(@RequestBody Request request) {
         customKafkaContainerRegistration.registerCustomKafkaContainer(request);
-//        customKafkaContainerRegistration.getContainer("sss").
     }
 
     @PostMapping(path = "/activate")
