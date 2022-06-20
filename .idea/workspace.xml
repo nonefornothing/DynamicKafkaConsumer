@@ -6,12 +6,15 @@
   <component name="ChangeListManager">
     <list default="true" id="ae1cc39a-d7e8-457c-9124-34393dcb2569" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/pom.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/bankmandiri/PE/dynamickafkaconsumer/Application.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/bankmandiri/PE/dynamickafkaconsumer/Application.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/com/bankmandiri/PE/dynamickafkaconsumer/adapter/BaseClientAdapter.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/bankmandiri/PE/dynamickafkaconsumer/adapter/BaseClientAdapter.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/com/bankmandiri/PE/dynamickafkaconsumer/adapter/api/impl/ClientAdapterImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/bankmandiri/PE/dynamickafkaconsumer/adapter/api/impl/ClientAdapterImpl.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/com/bankmandiri/PE/dynamickafkaconsumer/container/CustomKafkaContainerRegistration.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/bankmandiri/PE/dynamickafkaconsumer/container/CustomKafkaContainerRegistration.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/bankmandiri/PE/dynamickafkaconsumer/controller/ControllerExceptionHandler.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/bankmandiri/PE/dynamickafkaconsumer/controller/ControllerExceptionHandler.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/bankmandiri/PE/dynamickafkaconsumer/controller/KafkaConsumerRegistryController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/bankmandiri/PE/dynamickafkaconsumer/controller/KafkaConsumerRegistryController.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/com/bankmandiri/PE/dynamickafkaconsumer/listener/CustomListener.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/bankmandiri/PE/dynamickafkaconsumer/listener/CustomListener.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/application-dev.properties" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/application-dev.properties" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/application-production.properties" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/application-production.properties" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/application-test.properties" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/application-test.properties" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -170,11 +173,6 @@
         </line-breakpoint>
         <line-breakpoint enabled="true" type="java-line">
           <url>file://$PROJECT_DIR$/src/main/java/com/bankmandiri/PE/dynamickafkaconsumer/controller/KafkaConsumerRegistryController.java</url>
-          <line>28</line>
-          <option name="timeStamp" value="29" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" type="java-line">
-          <url>file://$PROJECT_DIR$/src/main/java/com/bankmandiri/PE/dynamickafkaconsumer/controller/KafkaConsumerRegistryController.java</url>
           <line>29</line>
           <option name="timeStamp" value="30" />
         </line-breakpoint>
@@ -182,11 +180,6 @@
           <url>file://$PROJECT_DIR$/src/main/java/com/bankmandiri/PE/dynamickafkaconsumer/controller/KafkaConsumerRegistryController.java</url>
           <line>30</line>
           <option name="timeStamp" value="31" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" type="java-line">
-          <url>file://$PROJECT_DIR$/src/main/java/com/bankmandiri/PE/dynamickafkaconsumer/controller/KafkaConsumerRegistryController.java</url>
-          <line>31</line>
-          <option name="timeStamp" value="32" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="java-line">
           <url>file://$PROJECT_DIR$/src/main/java/com/bankmandiri/PE/dynamickafkaconsumer/controller/KafkaConsumerRegistryController.java</url>

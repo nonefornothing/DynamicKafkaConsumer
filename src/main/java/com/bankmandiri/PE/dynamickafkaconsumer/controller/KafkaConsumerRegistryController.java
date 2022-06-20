@@ -4,8 +4,9 @@ import com.bankmandiri.PE.dynamickafkaconsumer.container.CustomKafkaContainerReg
 import com.bankmandiri.PE.dynamickafkaconsumer.model.KafkaConsumerAssignmentResponse;
 import com.bankmandiri.PE.dynamickafkaconsumer.model.Request;
 import com.bankmandiri.PE.dynamickafkaconsumer.model.KafkaConsumerResponse;
-import lombok.extern.slf4j.Slf4j;
 import org.apache.kafka.common.TopicPartition;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.kafka.listener.MessageListenerContainer;
@@ -14,26 +15,41 @@ import org.springframework.web.bind.annotation.*;
 import java.util.*;
 import java.util.stream.Collectors;
 
-@Slf4j
 @RestController
 @RequestMapping(path = "/consumer-management")
 public class KafkaConsumerRegistryController {
+
+    private final Logger logger = LoggerFactory.getLogger(KafkaConsumerRegistryController.class);
 
     @Autowired
     private CustomKafkaContainerRegistration customKafkaContainerRegistration;
 
     @GetMapping
     public List<KafkaConsumerResponse> getConsumerIds() {
-        return customKafkaContainerRegistration.getAllIds()
+        List<KafkaConsumerResponse> consumers = new ArrayList<>();
+        consumers = customKafkaContainerRegistration.getAllIds()
                 .stream()
                 .map(this::createKafkaConsumerResponse)
                 .collect(Collectors.toList());
+        logger.info(consumers.toString());
+        return consumers;
     }
 
     @PostMapping(path = "/create")
     @ResponseStatus(HttpStatus.CREATED)
     public void createConsumer(@RequestBody Request request) {
-        customKafkaContainerRegistration.registerCustomKafkaContainer(request);
+        MessageListenerContainer listenerContainer = customKafkaContainerRegistration.getContainer(request.getConsumerId());
+        if (Objects.isNull(listenerContainer)) {
+            try{
+                customKafkaContainerRegistration.registerCustomKafkaContainer(request);
+                logger.info("Consumer with id %s created " + request.getConsumerId());
+            }catch (Exception e){
+                logger.info("Consumer with id %s not created yet" + request.getConsumerId());
+            }
+        } else {
+            logger.info("consumer with id %s already created" + request.getConsumerId());
+            throw new RuntimeException(String.format("Consumer with id %s is already created", request.getConsumerId()));
+        }
     }
 
     @PostMapping(path = "/activate")
@@ -45,8 +61,22 @@ public class KafkaConsumerRegistryController {
         } else if (listenerContainer.isRunning()) {
             throw new RuntimeException(String.format("Consumer with id %s is already running", consumerId));
         } else {
-            log.info("Running a consumer with id " + consumerId);
+            logger.info("Running a consumer with id " + consumerId);
             listenerContainer.start();
+        }
+    }
+
+    @PostMapping(path = "/deactivate")
+    @ResponseStatus(HttpStatus.ACCEPTED)
+    public void deactivateConsumer(@RequestParam String consumerId) {
+        MessageListenerContainer listenerContainer = customKafkaContainerRegistration.getContainer(consumerId);
+        if (Objects.isNull(listenerContainer)) {
+            throw new RuntimeException(String.format("Consumer with id %s is not found", consumerId));
+        } else if (!listenerContainer.isRunning()) {
+            throw new RuntimeException(String.format("Consumer with id %s is already stop", consumerId));
+        } else {
+            logger.info("Stopping a consumer with id " + consumerId);
+            listenerContainer.stop();
         }
     }
 
@@ -63,7 +93,7 @@ public class KafkaConsumerRegistryController {
         } else if (listenerContainer.isPauseRequested()) {
             throw new RuntimeException(String.format("Consumer with id %s is already requested to be paused", consumerId));
         } else {
-            log.info("Pausing a consumer with id " + consumerId);
+            logger.info("Pausing a consumer with id " + consumerId);
             listenerContainer.pause();
         }
     }
@@ -79,22 +109,8 @@ public class KafkaConsumerRegistryController {
         } else if (!listenerContainer.isContainerPaused()) {
             throw new RuntimeException(String.format("Consumer with id %s is not paused", consumerId));
         } else {
-            log.info("Resuming a consumer with id " + consumerId);
+            logger.info("Resuming a consumer with id " + consumerId);
             listenerContainer.resume();
-        }
-    }
-
-    @PostMapping(path = "/deactivate")
-    @ResponseStatus(HttpStatus.ACCEPTED)
-    public void deactivateConsumer(@RequestParam String consumerId) {
-        MessageListenerContainer listenerContainer = customKafkaContainerRegistration.getContainer(consumerId);
-        if (Objects.isNull(listenerContainer)) {
-            throw new RuntimeException(String.format("Consumer with id %s is not found", consumerId));
-        } else if (!listenerContainer.isRunning()) {
-            throw new RuntimeException(String.format("Consumer with id %s is already stop", consumerId));
-        } else {
-            log.info("Stopping a consumer with id " + consumerId);
-            listenerContainer.stop();
         }
     }
 

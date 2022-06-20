@@ -44,7 +44,7 @@ public class CustomKafkaContainerRegistration {
     public Set<String> getAllIds(){
         Set<String> ids = new HashSet<>();
         for (String key : registry.keySet()) {
-            System.out.println(key + " : " + registry.get(key));
+//            System.out.println(key + " : " + registry.get(key));
             ids.add(key);
         }
         return ids;

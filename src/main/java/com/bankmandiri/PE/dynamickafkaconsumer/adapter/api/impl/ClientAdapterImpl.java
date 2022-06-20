@@ -2,8 +2,6 @@ package com.bankmandiri.PE.dynamickafkaconsumer.adapter.api.impl;
 
 import com.bankmandiri.PE.dynamickafkaconsumer.adapter.BaseClientAdapter;
 import com.bankmandiri.PE.dynamickafkaconsumer.adapter.api.ClientAdapter;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.http.HttpMethod;
 import org.springframework.http.MediaType;
 import org.springframework.stereotype.Service;

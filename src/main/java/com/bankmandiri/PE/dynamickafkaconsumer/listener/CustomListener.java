@@ -13,11 +13,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.kafka.listener.AcknowledgingMessageListener;
 import org.springframework.kafka.support.Acknowledgment;
-
-import java.io.IOException;
 import java.io.Serializable;
 import java.text.SimpleDateFormat;
-import java.util.concurrent.TimeUnit;
 
 public class CustomListener implements AcknowledgingMessageListener<String,String> , Serializable {
 
@@ -26,7 +23,6 @@ public class CustomListener implements AcknowledgingMessageListener<String,Strin
      * consumer engine clean topic PE
      * - construct and decode message to get URL from message
      * - send message to destination
-     * - retry re send after failed send until < retry.count
      *
      */
 
@@ -49,36 +45,32 @@ public class CustomListener implements AcknowledgingMessageListener<String,Strin
      * @param data           the data to be processed.
      * @param acknowledgment the acknowledgment.
      */
+
     @Override
     public void onMessage(ConsumerRecord data, Acknowledgment acknowledgment){
-        logger.info("Data received : " + data.value());
-        acknowledgment.acknowledge();
-        logger.info("Data consumed: " + data);
-
-
 
         String bodyReal =null;
+        String result = null;
+
         try {
             bodyReal = getBody(data);
-            String decript = decript(bodyReal);
+            String encryptedData = encryptData(bodyReal);
             String uri =getUri(data);
-            logger.info("start send data mansek : "+ sdf.format(new java.util.Date()) +" | Offset  : " + data.offset() + " | partition : " + data.partition()+" | data : "+ bodyReal);
-            logger.info("start send data mansek decript : "+ sdf.format(new java.util.Date()) +" | Offset  : " + data.offset() + " | partition : " + data.partition()+" | data : "+ decript);
-            sending(decript,uri);
+            logger.info("start send data to PE : "+ sdf.format(new java.util.Date()) +" | Offset  : " + data.offset() + " | partition : " + data.partition()+" | data : "+ bodyReal + " | encryptedData : " + encryptedData);
+            result = sending(encryptedData,uri);
             acknowledgment.acknowledge();
-            logger.info("end send data mansek : "+ sdf.format(new java.util.Date()) +" | Offset  : " + data.offset() + " | partition : " + data.partition());
+            logger.info("end send data : "+ sdf.format(new java.util.Date()) +" | Offset  : " + data.offset() + " | partition : " + data.partition() + " | response : " + result);
         }catch (Exception e) {
-            logger.error("Error....!!!" + e.getMessage());
-            logger.error("write to file...!!!"+" | Offset  : " + data.offset() + " | partition : " + data.partition());
+            logger.error("Error....!!!  " + e.getMessage() +" | Offset  : " + data.offset() + " | partition : " + data.partition());
         }
     }
 
-    private String sending(String decript,String uri) throws Exception {
+    private String sending(String encryptedData,String uri) throws Exception {
         String body =null;
-        body = "{\"data\":\""+decript+"\"}";
-        String reslut = streamService.sendData(body,uri);
-        logger.info("response mansek : "+ sdf.format(new java.util.Date()) +" ==> " + reslut);
-        return reslut;
+        body = "{\"data\":\""+encryptedData+"\"}";
+        String result = streamService.sendData(body,uri);
+        logger.info("response PE : "+ sdf.format(new java.util.Date()) +" ==> " + result);
+        return result;
     }
 
     public String getBody(ConsumerRecord<String, String> consumerRecord) throws JsonMappingException, JsonProcessingException {
@@ -97,9 +89,9 @@ public class CustomListener implements AcknowledgingMessageListener<String,Strin
 
     }
 
-    private String decript(String bodyReal) {
-        String decript = AESUtils.encrypt(bodyReal, secretKey);
-        return decript;
+    private String encryptData(String bodyReal) {
+        String encryptedData = AESUtils.encrypt(bodyReal, secretKey);
+        return encryptedData;
     }
 
     private ObjectNode parseMessages(ObjectNode node) {
