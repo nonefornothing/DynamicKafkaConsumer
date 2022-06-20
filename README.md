@@ -20,8 +20,8 @@ Technology used for this repo :
 
 - Consume data from broker kafka
 - Send consumed data from kafka to specific destination using rest API . If data failed to sent , then resending data scenario will play role , explain below :
-
-![producer-scenario](https://github.com/nonefornothing/kafka-producer-with-production-configuration/blob/master/ProducerDesignForPE-diagrameditor.jpg)
+  https://github.com/nonefornothing//blob/java8-containerListener/Resending%20scenario.png
+![producer-scenario](https://github.com/nonefornothing/DynamicKafkaConsumer/blob/java8-containerListener/ProducerDesignForPE-diagrameditor.jpg)
 
 ## How to use
 
