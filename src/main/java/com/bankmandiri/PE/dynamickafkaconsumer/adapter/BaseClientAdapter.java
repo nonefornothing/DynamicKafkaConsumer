@@ -19,9 +19,6 @@ public class BaseClientAdapter {
 	@Value("${adapter.client.timeout}")
 	private int adapterClientTimeout;
 	
-	@Value("${healtCheck.client.timeout}")
-	private int healtCheckClientTimeout;
-	
 	@Value("${mansek.user}")
 	private String mansekUser;
 	
@@ -30,8 +27,6 @@ public class BaseClientAdapter {
 	
 	 /**
     *
-    * @author BWX
-    * @Date 2020-03-12
     * Base client adapter to client
     * 
     */

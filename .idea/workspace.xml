@@ -6,18 +6,12 @@
   <component name="ChangeListManager">
     <list default="true" id="ae1cc39a-d7e8-457c-9124-34393dcb2569" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/README.md" beforeDir="false" afterPath="$PROJECT_DIR$/README.md" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/faza/example/dynamickafkaconsumer/Application.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/bankmandiri/PE/dynamickafkaconsumer/Application.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/faza/example/dynamickafkaconsumer/container/CustomConsumerFactory.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/bankmandiri/PE/dynamickafkaconsumer/container/CustomConsumerFactory.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/faza/example/dynamickafkaconsumer/container/CustomContainerProperties.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/bankmandiri/PE/dynamickafkaconsumer/container/CustomContainerProperties.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/faza/example/dynamickafkaconsumer/container/CustomKafkaContainerRegistration.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/bankmandiri/PE/dynamickafkaconsumer/container/CustomKafkaContainerRegistration.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/faza/example/dynamickafkaconsumer/controller/ControllerExceptionHandler.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/bankmandiri/PE/dynamickafkaconsumer/controller/ControllerExceptionHandler.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/faza/example/dynamickafkaconsumer/controller/KafkaConsumerRegistryController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/bankmandiri/PE/dynamickafkaconsumer/controller/KafkaConsumerRegistryController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/faza/example/dynamickafkaconsumer/listener/CustomListener.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/bankmandiri/PE/dynamickafkaconsumer/listener/CustomListener.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/faza/example/dynamickafkaconsumer/model/KafkaConsumerAssignmentResponse.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/bankmandiri/PE/dynamickafkaconsumer/model/KafkaConsumerAssignmentResponse.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/faza/example/dynamickafkaconsumer/model/KafkaConsumerResponse.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/bankmandiri/PE/dynamickafkaconsumer/model/KafkaConsumerResponse.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/faza/example/dynamickafkaconsumer/model/Request.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/bankmandiri/PE/dynamickafkaconsumer/model/Request.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/application.properties" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/application.properties" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/bankmandiri/PE/dynamickafkaconsumer/Application.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/bankmandiri/PE/dynamickafkaconsumer/Application.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/bankmandiri/PE/dynamickafkaconsumer/adapter/BaseClientAdapter.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/bankmandiri/PE/dynamickafkaconsumer/adapter/BaseClientAdapter.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/bankmandiri/PE/dynamickafkaconsumer/adapter/api/impl/ClientAdapterImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/bankmandiri/PE/dynamickafkaconsumer/adapter/api/impl/ClientAdapterImpl.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/application-dev.properties" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/application-dev.properties" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/application-production.properties" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/application-production.properties" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/application-test.properties" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/application-test.properties" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -54,6 +48,9 @@
       <recent name="D:\Project Mandiri\PE\Propose_PE_Sender_Design\Project\DynamicKafkaConsumer\Dynamic-Kafka-Consumer\src\main\java\com\bankmandiri\PE\dynamickafkaconsumer" />
       <recent name="D:\Project Mandiri\PE\Propose_PE_Sender_Design\Project\DynamicKafkaConsumer\Dynamic-Kafka-Consumer\src\main\resources" />
     </key>
+    <key name="CopyClassDialog.RECENTS_KEY">
+      <recent name="com.bankmandiri.PE.dynamickafkaconsumer.adapter.api" />
+    </key>
   </component>
   <component name="RunManager">
     <configuration name="Application" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
@@ -69,8 +66,23 @@
         <option name="Make" enabled="true" />
       </method>
     </configuration>
+    <configuration name="Application" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
+      <option name="MAIN_CLASS_NAME" value="com.bankmandiri.PE.dynamickafkaconsumer.Application" />
+      <module name="dynamic-kafka-consumer" />
+      <option name="VM_PARAMETERS" value="-Dspring.profiles.active=test" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="com.bankmandiri.PE.dynamickafkaconsumer.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
     <recent_temporary>
       <list>
+        <item itemvalue="Application.Application" />
         <item itemvalue="Application.Application" />
       </list>
     </recent_temporary>
