@@ -86,19 +86,4 @@ public class AESUtils {
 		return null;
 	}
 
- 
-
-//	  public static void main(String[] args) { 
-//			final String secretKey = "kafkaadmin";
-//	  
-//	  String originalString =
-//	  "ya/eO+85Rxh2CytePWRKDf/p0lCe+wRLQoGPDLG8j1dpYWfneCdaHzwJSLO9EwPvIJV6YagnVq8DZPb0MJuajcypCsbCkXfIIoOFHZ4LKv4quVHg7WaRpkxyjXNkA01YdwtUi26wlN4DIi/Ys2ak7hdENSZCZ3dllpCwyd+L/4BdbUk3dxsxkylUCVoTo9kuqDDjTbvUPVG3uRLy2Tulbdlp1mwGQlr7tE9qTRXt9qicWQhyhb/zcjun/v+hTOfKGF+cGJg0TkIdLj/ze/T7oRhfnBiYNE5CHS4/83v0+6Gl6pBA/DV4WAOwnjh1slPpSYlFpokzBt1Fgk5B4nlQfLXWTsVIBMr6N9ga92JDeEwPQPYxsj6X5S+tggXy//fGYM2c46DCMve5MUrV6KrKyEaOpBWnW34p1jEhDuzJi6pKdkGaR/leBb7OO5FqlISS3suVY/FmRvRPHZnLZ+iSuA8hiMSmnAROz+0c7Z4yEskYX5wYmDROQh0uP/N79PuhGF+cGJg0TkIdLj/ze/T7oRhfnBiYNE5CHS4/83v0+6EYX5wYmDROQh0uP/N79PuhGF+cGJg0TkIdLj/ze/T7oRhfnBiYNE5CHS4/83v0+6H6OTWZJw4ZjGR+9PueGb25fW2qiGYmHEnoRoYHhdvEkkIj8P7GGqrxYVt7+STNoUdPyXJdnE09DtDjBVGgTfC7+ow8HlEsgDMTkXICyrw8lQ==";
-//	  // String encryptedString = AESUtils.encrypt(originalString, secretKey) ;
-//	  String decryptedString = AESUtils.decrypt(originalString, secretKey) ;
-//	  
-//	  System.out.println(originalString); // System.out.println(encryptedString);
-//	  System.out.println(decryptedString); }
-	
-    
-    
 }

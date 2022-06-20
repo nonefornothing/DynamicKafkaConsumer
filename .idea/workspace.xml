@@ -6,9 +6,8 @@
   <component name="ChangeListManager">
     <list default="true" id="ae1cc39a-d7e8-457c-9124-34393dcb2569" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/bankmandiri/PE/dynamickafkaconsumer/listener/CustomListener.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/bankmandiri/PE/dynamickafkaconsumer/listener/CustomListener.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/README.md" beforeDir="false" afterPath="$PROJECT_DIR$/README.md" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/com/bankmandiri/PE/dynamickafkaconsumer/utils/AESUtils.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/bankmandiri/PE/dynamickafkaconsumer/utils/AESUtils.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/application-dev.properties" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/application-dev.properties" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
