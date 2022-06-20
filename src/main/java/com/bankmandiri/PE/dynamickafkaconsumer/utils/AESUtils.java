@@ -73,7 +73,7 @@ public class AESUtils {
 		return null;
 	}
 
-	public static String decrypt(String strToDecrypt, String secret) {
+	public static String decrypt(String strToDecrypt, String secret) throws Exception {
 		try {
 			setKey(secret);
 			Cipher cipher = Cipher.getInstance("AES/ECB/PKCS5PADDING");

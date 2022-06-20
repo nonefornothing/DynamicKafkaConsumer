@@ -6,15 +6,9 @@
   <component name="ChangeListManager">
     <list default="true" id="ae1cc39a-d7e8-457c-9124-34393dcb2569" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/bankmandiri/PE/dynamickafkaconsumer/adapter/BaseClientAdapter.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/bankmandiri/PE/dynamickafkaconsumer/adapter/BaseClientAdapter.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/bankmandiri/PE/dynamickafkaconsumer/adapter/api/impl/ClientAdapterImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/bankmandiri/PE/dynamickafkaconsumer/adapter/api/impl/ClientAdapterImpl.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/bankmandiri/PE/dynamickafkaconsumer/container/CustomKafkaContainerRegistration.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/bankmandiri/PE/dynamickafkaconsumer/container/CustomKafkaContainerRegistration.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/bankmandiri/PE/dynamickafkaconsumer/controller/ControllerExceptionHandler.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/bankmandiri/PE/dynamickafkaconsumer/controller/ControllerExceptionHandler.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/bankmandiri/PE/dynamickafkaconsumer/controller/KafkaConsumerRegistryController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/bankmandiri/PE/dynamickafkaconsumer/controller/KafkaConsumerRegistryController.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/com/bankmandiri/PE/dynamickafkaconsumer/listener/CustomListener.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/bankmandiri/PE/dynamickafkaconsumer/listener/CustomListener.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/bankmandiri/PE/dynamickafkaconsumer/utils/AESUtils.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/bankmandiri/PE/dynamickafkaconsumer/utils/AESUtils.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/resources/application-dev.properties" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/application-dev.properties" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/application-production.properties" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/application-production.properties" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/application-test.properties" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/application-test.properties" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -30,6 +24,14 @@
   </component>
   <component name="Git.Settings">
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
+  </component>
+  <component name="GitSEFilterConfiguration">
+    <file-type-list>
+      <filtered-out-file-type name="LOCAL_BRANCH" />
+      <filtered-out-file-type name="REMOTE_BRANCH" />
+      <filtered-out-file-type name="TAG" />
+      <filtered-out-file-type name="COMMIT_BY_MESSAGE" />
+    </file-type-list>
   </component>
   <component name="ProjectId" id="2AKfcRzRwZ5XdvKgn64TC98BIHk" />
   <component name="ProjectViewState">
