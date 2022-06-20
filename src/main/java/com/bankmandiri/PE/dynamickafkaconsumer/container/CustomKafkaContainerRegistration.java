@@ -22,7 +22,6 @@ public class CustomKafkaContainerRegistration {
 
     private final Map<String, MessageListenerContainer> registry = new ConcurrentHashMap<>();
 
-
     public void registerCustomKafkaContainer(Request request) {
         CustomContainerProperties customContainerProperties = new CustomContainerProperties(request.getTopicName(),request.getConsumerId());
         ConcurrentMessageListenerContainer<String, String> container = new ConcurrentMessageListenerContainer<>(

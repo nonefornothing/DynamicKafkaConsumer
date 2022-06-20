@@ -13,17 +13,15 @@ import java.util.Base64;
 
 @Service
 public class BaseClientAdapter {
-	
-	private final Logger logger = LoggerFactory.getLogger(BaseClientAdapter.class);
-	
+
 	@Value("${adapter.client.timeout}")
 	private int adapterClientTimeout;
 	
-	@Value("${mansek.user}")
-	private String mansekUser;
+	@Value("${PE.user}")
+	private String peUser;
 	
-	@Value("${mansek.password}")
-	private String mansekPassword;
+	@Value("${PE.password}")
+	private String pePassword;
 	
 	 /**
     *
@@ -54,7 +52,7 @@ public class BaseClientAdapter {
 	
 	//set header for authentication
 	private HttpHeaders setHeaders() {
-		String authStr = mansekUser+":"+mansekPassword;
+		String authStr = peUser+":"+pePassword;
 	    String base64Creds = Base64.getEncoder().encodeToString(authStr.getBytes());
 	    HttpHeaders headers = new HttpHeaders();
 	    headers.add("Authorization", "Basic " + base64Creds);

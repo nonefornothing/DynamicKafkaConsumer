@@ -9,7 +9,7 @@
 <!--		<version>2.4.0</version>-->
 		<relativePath/> <!-- lookup parent from repository -->
 	</parent>
-	<groupId>com.faza.example</groupId>
+	<groupId>com.bankmandiri.PE</groupId>
 	<artifactId>dynamic-kafka-consumer</artifactId>
 	<version>1.0.0-1-SNAPSHOT</version>
 	<name>Dynamic Kafka Consumer</name>
