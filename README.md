@@ -20,8 +20,8 @@ Technology used for this repo :
 
 - Consume data from broker kafka
 - Send consumed data from kafka to specific destination using rest API . If data failed to sent , then resending data scenario will play role , explain below :
-  https://github.com/nonefornothing//blob/java8-containerListener/Resending%20scenario.png
-![producer-scenario](https://github.com/nonefornothing/DynamicKafkaConsumer/blob/java8-containerListener/ProducerDesignForPE-diagrameditor.jpg)
+
+![resending-scenario](https://github.com/nonefornothing/DynamicKafkaConsumer/blob/java8-containerListener/ResendingScenario.png)
 
 ## How to use
 
@@ -31,12 +31,17 @@ Technology used for this repo :
    ```sh
    kafka.consumer.broker=localhost:8080
    ```
+- Set spring profiles for choose which environment that you want use . In intellij , use add VM options setting .
+  example below for test environment
+   ```sh
+   -Dspring.profiles.active=test 
+   ```
 
 ### Deploy to web application server [war]
 
-- in maven terminal, bundle project to war file
+- in maven terminal, bundle project to war file for production environment
    ```sh
-   mvn clean package
+   mvn clean package -P production
    ```
 - in project directory, go to target folder and move war file to your web application service
 
@@ -80,7 +85,7 @@ MIT
 
 
 
-Note : 
+# Note
 Need cron job for cleaning data automatically for data log
 
 You can download postman collection below :
