@@ -42,7 +42,7 @@ Technology used for this repo :
 - Consume data from broker kafka
 - Send consumed data from kafka to specific destination using rest API . If data failed to sent , then resending data scenario will play role , explain below :
 
-![resending-scenario](https://github.com/nonefornothing/DynamicKafkaConsumer/blob/java8-containerListener/ResendingScenario.png)
+![resending-scenario](ResendingScenario.png)
 
 ## How to use
 
