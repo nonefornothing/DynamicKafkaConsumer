@@ -4,7 +4,10 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="3242b90b-a426-487a-94aa-f1c6c72fa48e" name="Default Changelist" comment="" />
+    <list default="true" id="3242b90b-a426-487a-94aa-f1c6c72fa48e" name="Default Changelist" comment="">
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/bankmandiri/streamfailedpe/listener/CustomListener.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/bankmandiri/streamfailedpe/listener/CustomListener.java" afterDir="false" />
+    </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />

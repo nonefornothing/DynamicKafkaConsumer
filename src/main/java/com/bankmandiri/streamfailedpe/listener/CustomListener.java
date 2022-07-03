@@ -12,6 +12,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.kafka.listener.AcknowledgingMessageListener;
 import org.springframework.kafka.support.Acknowledgment;
 import org.springframework.stereotype.Service;
+import org.springframework.web.client.HttpClientErrorException;
 
 
 import java.io.IOException;
@@ -78,80 +79,89 @@ public class CustomListener implements AcknowledgingMessageListener<String,Strin
         String uriDestination = null;
         String bodyReal = null;
         ResponseEntity<String> result;
-
         try {
-            bodyReal = getBody(consumerRecord,jsonKeyUrl);
-            encryptedMessage = encryptMessage(bodyReal);
-            uriDestination =getUri(consumerRecord);
-        }catch (Exception e){
-            writeToFile(consumerRecord.value());
-            logger.error("Error....!!!" + e.getMessage());
-            logger.error("write data with offset " + consumerRecord.offset() + " , partition " + consumerRecord.partition() + " to file");
-        }
-
-        if (bodyReal == null || encryptedMessage == null || uriDestination == null){
-            logger.error("Error while get needed data | " + " bodyReal = " + bodyReal + " | encryptedData = " + encryptedMessage + " | Uri = " + uriDestination);
-        }else {
             try {
+                bodyReal = getBody(consumerRecord,jsonKeyUrl);
+                encryptedMessage = encryptMessage(bodyReal);
+                uriDestination =getUri(consumerRecord);
+            }catch (Exception e){
+                writeToFile(consumerRecord.value());
+                logger.error("Error....!!!" + e.getMessage());
+                logger.error("write data with offset " + consumerRecord.offset() + " , partition " + consumerRecord.partition() + " to file");
+            }
+            if (bodyReal != null) {
                 logger.info("start send data : " + sdf.format(new java.util.Date()) + " | Offset  : " + consumerRecord.offset() + " | partition : " + consumerRecord.partition() + " | data : " + bodyReal);
                 result = sending(encryptedMessage, uriDestination);
                 acknowledgment.acknowledge();
                 logger.info("end send data : " + sdf.format(new java.util.Date()) + " | Offset  : " + consumerRecord.offset() + " | partition : " + consumerRecord.partition() + " | response : " + result.getBody());
-                if (result.getStatusCode().is4xxClientError()) {
-                    writeToFile(bodyReal);
-                    logger.error("Error....!!! error message " + result.getBody() + " status code : " + result.getStatusCodeValue());
-                    logger.error("write data | " + bodyReal + " with offset " + consumerRecord.offset() + " , partition " + consumerRecord.partition() + " to file");
+            }
+        }catch (HttpClientErrorException ec){
+            if (bodyReal != null) {
+                writeToFile(bodyReal);
+                logger.error("Error....!!! error message " + ec.getMessage() + " status code : " + ec.getStatusCode());
+                logger.error("write data | " + bodyReal + " with offset " + consumerRecord.offset() + " , partition " + consumerRecord.partition() + " to file");
+            }else{
+                logger.error("Body null");
+            }
+            acknowledgment.acknowledge();
+        }catch (Exception e){
+            logger.error("Error....!!!  " + e.getMessage());
+            logger.error("Retry after "+initRetryAfterFailed+" ms ....!!!");
+            try {
+                TimeUnit.MILLISECONDS.sleep(initRetryAfterFailed);
+                int i;
+                for (i = 2; i <= retryCount;i++) {
+                    try {
+                        logger.info("start retry send data to PE : "+ sdf.format(new java.util.Date()) +" | Offset  : " + consumerRecord.offset() + " | partition : " + consumerRecord.partition()+" | data : "+ bodyReal);
+                        result = sending(encryptedMessage,uriDestination);
+                        acknowledgment.acknowledge();
+                        logger.info("end retry send data : "+ sdf.format(new java.util.Date()) +" | Offset  : " + consumerRecord.offset() + " | partition : " + consumerRecord.partition() + " | response : " + result.getBody());
+                        break;
+                    }catch (HttpClientErrorException ec){
+                        if (bodyReal != null) {
+                            writeToFile(bodyReal);
+                            logger.error("Error....!!! error message " + ec.getMessage() + " status code : " + ec.getStatusCode());
+                            logger.error("write data | " + bodyReal + " with offset " + consumerRecord.offset() + " , partition " + consumerRecord.partition() + " to file");
+                        }else{
+                            logger.error("Body null");
+                        }
+                        acknowledgment.acknowledge();
+                    }catch (Exception e1) {
+                        TimeUnit.MILLISECONDS.sleep((long) initRetryAfterFailed *i );
+                        logger.error("Error retry ....!!! ==> " + i + " "+" | Offset  : " + consumerRecord.offset() + " | partition : " + consumerRecord.partition() + " | error message : " + e1.getMessage());
+                        continue;
+                    }
                 }
-            }catch (Exception e) {
-                logger.error("Error....!!!  " + e.getMessage());
-                logger.error("Retry after "+initRetryAfterFailed+" ms ....!!!");
-                try {
-                    TimeUnit.MILLISECONDS.sleep(initRetryAfterFailed);
-                    int i;
-                    for (i = 2; i <= retryCount;i++) {
+                if (i>retryCount){
+                    while(true){
                         try {
-                            logger.info("start retry send data to PE : "+ sdf.format(new java.util.Date()) +" | Offset  : " + consumerRecord.offset() + " | partition : " + consumerRecord.partition()+" | data : "+ bodyReal);
+                            logger.info("start send data to PE : "+ sdf.format(new java.util.Date()) +" | Offset  : " + consumerRecord.offset() + " | partition : " + consumerRecord.partition()+" | data : "+ bodyReal + " | encryptedData : " + encryptedMessage);
                             result = sending(encryptedMessage,uriDestination);
                             acknowledgment.acknowledge();
-                            logger.info("end retry send data : "+ sdf.format(new java.util.Date()) +" | Offset  : " + consumerRecord.offset() + " | partition : " + consumerRecord.partition() + " | response : " + result.getBody());
-                            if (result.getStatusCode().is4xxClientError()) {
-                                writeToFile(bodyReal);
-                                logger.error("Error....!!! error message " + result.getBody() + " status code : " + result.getStatusCodeValue());
-                                logger.error("write data | " + bodyReal + " with offset " + consumerRecord.offset() + " , partition " + consumerRecord.partition() + " to file");
-                            }
+                            logger.info("end send data : "+ sdf.format(new java.util.Date()) +" | Offset  : " + consumerRecord.offset() + " | partition : " + consumerRecord.partition() + " | response : " + result);
                             break;
-                        } catch (Exception e1) {
-                            TimeUnit.MILLISECONDS.sleep((long) initRetryAfterFailed *i );
-                            logger.error("Error....!!!" + e.getMessage());
-                            logger.error("Error retry ....!!! ==> " + i + " "+" | Offset  : " + consumerRecord.offset() + " | partition : " + consumerRecord.partition() + " | error message : " + e1.getMessage());
+                        }catch (HttpClientErrorException ec){
+                            if (bodyReal != null) {
+                                writeToFile(bodyReal);
+                                logger.error("Error....!!! error message " + ec.getMessage() + " status code : " + ec.getStatusCode());
+                                logger.error("write data | " + bodyReal + " with offset " + consumerRecord.offset() + " , partition " + consumerRecord.partition() + " to file");
+                            }else{
+                                logger.error("Body null");
+                            }
+                            acknowledgment.acknowledge();
+                        }catch (Exception e1) {
+                            logger.error("Error retry forever ....!!! ==> " + " | Offset  : " + consumerRecord.offset() + " | partition : " + consumerRecord.partition() + " | error message : " + e1.getMessage());
                             continue;
                         }
+                        TimeUnit.MILLISECONDS.sleep((long) initRetryAfterFailed *i);
                     }
-                    if (i>retryCount){
-                        while(true){
-                            try {
-                                logger.info("start send data to PE : "+ sdf.format(new java.util.Date()) +" | Offset  : " + consumerRecord.offset() + " | partition : " + consumerRecord.partition()+" | data : "+ bodyReal + " | encryptedData : " + encryptedMessage);
-                                result = sending(encryptedMessage,uriDestination);
-                                acknowledgment.acknowledge();
-                                logger.info("end send data : "+ sdf.format(new java.util.Date()) +" | Offset  : " + consumerRecord.offset() + " | partition : " + consumerRecord.partition() + " | response : " + result);
-                                if (result.getStatusCode().is4xxClientError()) {
-                                    writeToFile(bodyReal);
-                                    logger.error("Error....!!! error message " + result.getBody() + " status code : " + result.getStatusCodeValue());
-                                    logger.error("write data | " + bodyReal + " with offset " + consumerRecord.offset() + " , partition " + consumerRecord.partition() + " to file");
-                                }
-                                break;
-                            }catch (Exception e2){
-                                logger.error("Error retry forever ....!!! ==> " + " | Offset  : " + consumerRecord.offset() + " | partition : " + consumerRecord.partition() + " | error message : " + e2.getMessage());
-                            }
-                            TimeUnit.MILLISECONDS.sleep((long) initRetryAfterFailed *i);
-                        }
-                    }
-                } catch (Exception e3) {
-                    logger.error("Error while retry data !!!!"+" | Offset  : " + consumerRecord.offset() + " | partition : " + consumerRecord.partition() + " | error message : " + e3.getMessage());
                 }
+            } catch (Exception e3) {
+                logger.error("Error while retry data !!!!"+" | Offset  : " + consumerRecord.offset() + " | partition : " + consumerRecord.partition() + " | error message : " + e3.getMessage());
             }
+        }finally {
+            acknowledgment.acknowledge();
         }
-
     }
 
     private ResponseEntity<String> sending(String encryptedMessage, String uri) throws Exception {
