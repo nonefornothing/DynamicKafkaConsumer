@@ -1,9 +1,9 @@
 package com.bankmandiri.streamfailedpe.services;
 
-import java.net.ConnectException;
+import org.springframework.http.ResponseEntity;
 
 public interface StreamService {
 	
-	public String sendData (String request,String uri) throws ConnectException;
+	public ResponseEntity<String> sendData (String request, String uri) throws Exception;
 
 }

@@ -23,6 +23,7 @@ public class CustomConsumerFactory {
     @Value("${enable.auto.commit}")
     private String enableAutoCommit;
 
+    @Bean
     public ConsumerFactory<String,String> getCustomConsumerFactory() {
         Map<String, Object> config = new HashMap<>();
         config.put(ConsumerConfig.BOOTSTRAP_SERVERS_CONFIG, bootstrapServers);

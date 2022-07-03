@@ -2,22 +2,27 @@ package com.bankmandiri.streamfailedpe.listener;
 
 import com.bankmandiri.streamfailedpe.services.StreamService;
 import com.bankmandiri.streamfailedpe.utils.AESUtils;
+import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.node.ObjectNode;
 import org.apache.kafka.clients.consumer.ConsumerRecord;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Value;
+import org.springframework.http.ResponseEntity;
 import org.springframework.kafka.listener.AcknowledgingMessageListener;
 import org.springframework.kafka.support.Acknowledgment;
 import org.springframework.stereotype.Service;
 
+
+import java.io.IOException;
 import java.io.Serializable;
+import java.nio.file.Files;
+import java.nio.file.Paths;
+import java.nio.file.StandardOpenOption;
 import java.text.SimpleDateFormat;
 import java.util.concurrent.TimeUnit;
 
-
+@Service
 public class CustomListener implements AcknowledgingMessageListener<String,String> , Serializable {
 
     /**
@@ -25,7 +30,7 @@ public class CustomListener implements AcknowledgingMessageListener<String,Strin
      * consumer engine clean topic PE
      * - construct and decode message to get URL from message
      * - send message to destination
-     * - retry scenerio (exponential time) with X maximum time and if still failed then its loop forever untill its success
+     * - retry scenario (exponential time) with X maximum time and if still failed then its loop forever until its success
      *   ex : retryCount = 5 ,
      *   sleep 1 s
      *   sleep 2 s
@@ -36,19 +41,23 @@ public class CustomListener implements AcknowledgingMessageListener<String,Strin
      *
      */
 
-    private StreamService streamService;
-    private String jsonKeyUrl;
-    private String secretKey;
-    private int initRetryAfterFailed;
-    private int retryCount;
+    private final StreamService streamService;
+    private final String jsonKeyUrl;
+    private final String secretKey;
+    private final int initRetryAfterFailed;
+    private final int retryCount;
+    private final String dirFailedPE;
 
-    public CustomListener(StreamService streamService, String jsonKeyUrl, String secretKey, int initRetryAfterFailed, int retryCount) {
+    public CustomListener(StreamService streamService, String jsonKeyUrl, String secretKey, int initRetryAfterFailed, int retryCount, String dirFailedPE) {
         this.streamService = streamService;
         this.jsonKeyUrl = jsonKeyUrl;
         this.secretKey = secretKey;
         this.initRetryAfterFailed = initRetryAfterFailed;
         this.retryCount = retryCount;
+        this.dirFailedPE = dirFailedPE;
     }
+
+    private static final long serialVersionUID = 3938181625248309928L;
 
     private final Logger logger = LoggerFactory.getLogger(CustomListener.class);
 
@@ -58,122 +67,122 @@ public class CustomListener implements AcknowledgingMessageListener<String,Strin
     /**
      * Invoked with data from kafka.
      *
-     * @param data           the data to be processed.
+     * @param consumerRecord the data to be processed.
      * @param acknowledgment the acknowledgment.
      */
 
     @Override
-    public void onMessage(ConsumerRecord data, Acknowledgment acknowledgment){
+    public void onMessage(ConsumerRecord<String,String> consumerRecord, Acknowledgment acknowledgment){
 
-//        logger.info("Data received : " + data.value());
-//        acknowledgment.acknowledge();
-//        logger.info("Data consumed: " + data);
-//        logger.info("End of Process ");
+        String encryptedMessage = null;
+        String uriDestination = null;
+        String bodyReal = null;
+        ResponseEntity<String> result;
 
-        String result = null;
-        String bodyReal = getBody(data);
-        String encryptedData = encryptData(bodyReal);
-        String uri = getUri(data);
+        try {
+            bodyReal = getBody(consumerRecord,jsonKeyUrl);
+            encryptedMessage = encryptMessage(bodyReal);
+            uriDestination =getUri(consumerRecord);
+        }catch (Exception e){
+            writeToFile(consumerRecord.value());
+            logger.error("Error....!!!" + e.getMessage());
+            logger.error("write data with offset " + consumerRecord.offset() + " , partition " + consumerRecord.partition() + " to file");
+        }
 
-        if (bodyReal == null || encryptedData == null || uri == null){
-            logger.error("Error while get needed data | " + " bodyReal = " + bodyReal + " | encryptedData = " + encryptedData + " | Uri = " + uri);
-        }else{
+        if (bodyReal == null || encryptedMessage == null || uriDestination == null){
+            logger.error("Error while get needed data | " + " bodyReal = " + bodyReal + " | encryptedData = " + encryptedMessage + " | Uri = " + uriDestination);
+        }else {
             try {
-                logger.info("start send data to PE : "+ sdf.format(new java.util.Date()) +" | Offset  : " + data.offset() + " | partition : " + data.partition()+" | data : "+ bodyReal + " | encryptedData : " + encryptedData);
-                result = sending(encryptedData,uri);
+                logger.info("start send data : " + sdf.format(new java.util.Date()) + " | Offset  : " + consumerRecord.offset() + " | partition : " + consumerRecord.partition() + " | data : " + bodyReal);
+                result = sending(encryptedMessage, uriDestination);
                 acknowledgment.acknowledge();
-                logger.info("end send data : "+ sdf.format(new java.util.Date()) +" | Offset  : " + data.offset() + " | partition : " + data.partition() + " | response : " + result);
+                logger.info("end send data : " + sdf.format(new java.util.Date()) + " | Offset  : " + consumerRecord.offset() + " | partition : " + consumerRecord.partition() + " | response : " + result.getBody());
+                if (result.getStatusCode().is4xxClientError()) {
+                    writeToFile(bodyReal);
+                    logger.error("Error....!!! error message " + result.getBody() + " status code : " + result.getStatusCodeValue());
+                    logger.error("write data | " + bodyReal + " with offset " + consumerRecord.offset() + " , partition " + consumerRecord.partition() + " to file");
+                }
             }catch (Exception e) {
-                logger.error("Error....!!!" + e.getMessage());
+                logger.error("Error....!!!  " + e.getMessage());
                 logger.error("Retry after "+initRetryAfterFailed+" ms ....!!!");
                 try {
                     TimeUnit.MILLISECONDS.sleep(initRetryAfterFailed);
                     int i;
                     for (i = 2; i <= retryCount;i++) {
                         try {
-                            logger.info("start send data to PE : "+ sdf.format(new java.util.Date()) +" | Offset  : " + data.offset() + " | partition : " + data.partition()+" | data : "+ bodyReal + " | encryptedData : " + encryptedData);
-                            result = sending(encryptedData,uri);
+                            logger.info("start retry send data to PE : "+ sdf.format(new java.util.Date()) +" | Offset  : " + consumerRecord.offset() + " | partition : " + consumerRecord.partition()+" | data : "+ bodyReal);
+                            result = sending(encryptedMessage,uriDestination);
                             acknowledgment.acknowledge();
-                            logger.info("end send data : "+ sdf.format(new java.util.Date()) +" | Offset  : " + data.offset() + " | partition : " + data.partition() + " | response : " + result);
+                            logger.info("end retry send data : "+ sdf.format(new java.util.Date()) +" | Offset  : " + consumerRecord.offset() + " | partition : " + consumerRecord.partition() + " | response : " + result.getBody());
+                            if (result.getStatusCode().is4xxClientError()) {
+                                writeToFile(bodyReal);
+                                logger.error("Error....!!! error message " + result.getBody() + " status code : " + result.getStatusCodeValue());
+                                logger.error("write data | " + bodyReal + " with offset " + consumerRecord.offset() + " , partition " + consumerRecord.partition() + " to file");
+                            }
                             break;
                         } catch (Exception e1) {
                             TimeUnit.MILLISECONDS.sleep((long) initRetryAfterFailed *i );
-                            logger.error("Error retry ....!!! ==> "+i+" "+" | Offset  : " + data.offset() + " | partition : " + data.partition() + e1.getMessage());
+                            logger.error("Error....!!!" + e.getMessage());
+                            logger.error("Error retry ....!!! ==> " + i + " "+" | Offset  : " + consumerRecord.offset() + " | partition : " + consumerRecord.partition() + " | error message : " + e1.getMessage());
                             continue;
                         }
                     }
                     if (i>retryCount){
                         while(true){
                             try {
-                                logger.info("start send data to PE : "+ sdf.format(new java.util.Date()) +" | Offset  : " + data.offset() + " | partition : " + data.partition()+" | data : "+ bodyReal + " | encryptedData : " + encryptedData);
-                                result = sending(encryptedData,uri);
+                                logger.info("start send data to PE : "+ sdf.format(new java.util.Date()) +" | Offset  : " + consumerRecord.offset() + " | partition : " + consumerRecord.partition()+" | data : "+ bodyReal + " | encryptedData : " + encryptedMessage);
+                                result = sending(encryptedMessage,uriDestination);
                                 acknowledgment.acknowledge();
-                                logger.info("end send data : "+ sdf.format(new java.util.Date()) +" | Offset  : " + data.offset() + " | partition : " + data.partition() + " | response : " + result);
+                                logger.info("end send data : "+ sdf.format(new java.util.Date()) +" | Offset  : " + consumerRecord.offset() + " | partition : " + consumerRecord.partition() + " | response : " + result);
+                                if (result.getStatusCode().is4xxClientError()) {
+                                    writeToFile(bodyReal);
+                                    logger.error("Error....!!! error message " + result.getBody() + " status code : " + result.getStatusCodeValue());
+                                    logger.error("write data | " + bodyReal + " with offset " + consumerRecord.offset() + " , partition " + consumerRecord.partition() + " to file");
+                                }
                                 break;
                             }catch (Exception e2){
-                                logger.error("Error retry forever ....!!! ==> " + " | Offset  : " + data.offset() + " | partition : " + data.partition() + e2.getMessage());
+                                logger.error("Error retry forever ....!!! ==> " + " | Offset  : " + consumerRecord.offset() + " | partition : " + consumerRecord.partition() + " | error message : " + e2.getMessage());
                             }
                             TimeUnit.MILLISECONDS.sleep((long) initRetryAfterFailed *i);
                         }
                     }
                 } catch (Exception e3) {
-                    logger.error("Error while retry data !!!!"+" | Offset  : " + data.offset() + " | partition : " + data.partition() + e3.getMessage());
+                    logger.error("Error while retry data !!!!"+" | Offset  : " + consumerRecord.offset() + " | partition : " + consumerRecord.partition() + " | error message : " + e3.getMessage());
                 }
             }
         }
-    }
-
-    private String sending(String encryptedData,String uri) throws Exception {
-        String body =null;
-        body = "{\"data\":\""+encryptedData+"\"}";
-        String result = streamService.sendData(body,uri);
-        logger.info("response PE : "+ sdf.format(new java.util.Date()) +" ==> " + result);
-        return result;
-    }
-
-    public String getBody(ConsumerRecord<String, String> consumerRecord) {
-        try {
-            String bodyReal = null;
-            ObjectNode node = (ObjectNode) new ObjectMapper().readTree(consumerRecord.value());
-            ObjectNode realNode = parseMessages(node);
-            bodyReal = realNode.toString();
-            return bodyReal;
-        }catch (Exception e){
-            logger.error("Error while parsing body with error " + e.getMessage());
-            return null;
-        }
-    }
-
-    private String getUri (ConsumerRecord<String, String> consumerRecord) {
-        String uri = null;
-        try {
-            ObjectNode node = (ObjectNode) new ObjectMapper().readTree(consumerRecord.value()) ;
-            uri = getUri(node);
-            return uri;
-        }catch (Exception e){
-            logger.error("Error while get Uri with error " + e.getMessage());
-            return null;
-        }
-    }
-
-    private String encryptData(String bodyReal) {
-        try {
-            String encryptedData = AESUtils.encrypt(bodyReal, secretKey);
-            return encryptedData;
-        }catch (Exception e){
-            logger.error("Error while encrypt data with error " + e.getMessage());
-            return null;
-        }
 
     }
 
-    private ObjectNode parseMessages(ObjectNode node) {
+    private ResponseEntity<String> sending(String encryptedMessage, String uri) throws Exception {
+        String body;
+        body = "{\"data\":\""+encryptedMessage+"\"}";
+        return streamService.sendData(body,uri);
+    }
+
+    private String encryptMessage(String bodyReal) {
+        return AESUtils.encrypt(bodyReal, secretKey);
+    }
+
+    private void parseMessages(ObjectNode node, String jsonKeyUrl) {
         try {
             node.remove(jsonKeyUrl);
         } catch (Exception e) {
-            logger.error("Error parsing message....!!! [ " + node.asText() + " ]");
+            logger.error("Error parsing message....!!! [ " + node.asText() + " ]" + e.getMessage());
         }
-        return node;
+    }
+
+    public String getBody(ConsumerRecord<String, String> consumerRecord,String jsonKeyUrl) throws JsonProcessingException {
+        String bodyReal;
+        ObjectNode node = (ObjectNode) new ObjectMapper().readTree(consumerRecord.value());
+        parseMessages(node,jsonKeyUrl);
+        bodyReal = node.toString();
+        return bodyReal;
+    }
+
+    private String getUri (ConsumerRecord<String, String> consumerRecord) throws JsonProcessingException {
+        ObjectNode node = (ObjectNode) new ObjectMapper().readTree(consumerRecord.value()) ;
+        return getUri(node);
     }
 
     private String getUri(ObjectNode node) {
@@ -181,8 +190,22 @@ public class CustomListener implements AcknowledgingMessageListener<String,Strin
         try {
             uri = node.get(jsonKeyUrl).asText();
         } catch (Exception e) {
-            logger.error("Error get uri from message....!!! [ "+node.asText()+" ]");
+            logger.error("Error get uri from message....!!! [ "+node.asText()+" ]"+  e.getMessage());
         }
         return uri;
+    }
+
+    private void writeToFile(String bodyReal) {
+        try {
+            if(!bodyReal.isEmpty()) {
+                SimpleDateFormat sdf1 = new SimpleDateFormat("yyyyMMdd");
+                Files.write(Paths.get(dirFailedPE+sdf1.format(new java.util.Date())+ "-failed-pe.txt"), (bodyReal+ System.lineSeparator()).getBytes(), StandardOpenOption.CREATE, StandardOpenOption.APPEND);
+            }
+            else{
+                logger.error("Error...!!! write to failed PE file ...!!! Data null" );
+            }
+        }catch (IOException e3) {
+            logger.error("Error...!!! write to failed PE file ...!!!" + e3.getMessage());
+        }
     }
 }

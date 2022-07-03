@@ -1,9 +1,9 @@
 package com.bankmandiri.streamfailedpe.adapter.api;
 
-import java.net.ConnectException;
+import org.springframework.http.ResponseEntity;
 
 public interface ClientAdapter {
 
-	String paramRequest(String body, String uri) throws ConnectException;
+	ResponseEntity<String> paramRequest(String body, String uri) throws Exception;
 
 }

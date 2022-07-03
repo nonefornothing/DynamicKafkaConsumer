@@ -36,12 +36,15 @@ public class CustomKafkaContainerRegistration {
     @Value("${retry.count}")
     private int retryCount;
 
+    @Value("${dir.failed.pe}")
+    private String dirFailedPE;
+
     private final Map<String, MessageListenerContainer> registry = new ConcurrentHashMap<>();
 
     public void registerCustomKafkaContainer(Request request) {
         CustomContainerProperties customContainerProperties = new CustomContainerProperties(
                 request.getTopicName(),request.getConsumerId(),
-                streamService,jsonKeyUrl,secretKey,initRetryAfterFailed,retryCount);
+                streamService,jsonKeyUrl,secretKey,initRetryAfterFailed,retryCount,dirFailedPE);
         ConcurrentMessageListenerContainer<String, String> container = new ConcurrentMessageListenerContainer<>(
                 customConsumerFactory.getCustomConsumerFactory(),
                 customContainerProperties.getContainerProperties());
@@ -62,7 +65,6 @@ public class CustomKafkaContainerRegistration {
     public Set<String> getAllIds(){
         Set<String> ids = new HashSet<>();
         for (String key : registry.keySet()) {
-//            System.out.println(key + " : " + registry.get(key));
             ids.add(key);
         }
         return ids;

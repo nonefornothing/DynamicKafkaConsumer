@@ -1,12 +1,14 @@
 package com.bankmandiri.streamfailedpe.adapter;
 
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.http.*;
+import org.springframework.http.HttpEntity;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.HttpMethod;
+import org.springframework.http.ResponseEntity;
 import org.springframework.http.client.SimpleClientHttpRequestFactory;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
 
-import java.net.ConnectException;
 import java.util.Base64;
 
 @Service
@@ -28,23 +30,20 @@ public class BaseClientAdapter {
     */
 	
 	@SuppressWarnings({ "rawtypes", "unchecked" })
-	public String sendRequest(String url, String body, HttpMethod method, MediaType mediaType) throws ConnectException {
+	public ResponseEntity<String> sendRequest(String url, String body, HttpMethod method) throws Exception {
 		RestTemplate restTemplate = new RestTemplate(getClientHttpRequestFactory(adapterClientTimeout));
 		HttpHeaders headers = setHeaders();
-//		headers.setAccept(Arrays.asList(mediaType));
-	    HttpEntity request = new HttpEntity(body,headers);
-	    ResponseEntity<String> response = restTemplate.exchange(url, method, request, String.class);
-	    return response.getBody();
-		
+		HttpEntity request = new HttpEntity(body,headers);
+		return restTemplate.exchange(url, method, request, String.class);
 	}
 
 	// set timeout
-	private SimpleClientHttpRequestFactory getClientHttpRequestFactory(int timesOut){
+	private SimpleClientHttpRequestFactory getClientHttpRequestFactory(int timeout){
 	    SimpleClientHttpRequestFactory clientHttpRequestFactory= new SimpleClientHttpRequestFactory();
 	    //Connect timeout
-	    clientHttpRequestFactory.setConnectTimeout(timesOut);
+	    clientHttpRequestFactory.setConnectTimeout(timeout);
 	    //Read timeout
-	    clientHttpRequestFactory.setReadTimeout(timesOut);
+	    clientHttpRequestFactory.setReadTimeout(timeout);
 	    return clientHttpRequestFactory;
 	}
 	
