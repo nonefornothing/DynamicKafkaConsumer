@@ -17,10 +17,10 @@ public class BaseClientAdapter {
 	@Value("${adapter.client.timeout}")
 	private int adapterClientTimeout;
 	
-	@Value("${PE.user}")
+	@Value("${pe.user}")
 	private String peUser;
 	
-	@Value("${PE.password}")
+	@Value("${pe.password}")
 	private String pePassword;
 	
 	 /**

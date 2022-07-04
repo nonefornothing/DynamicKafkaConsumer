@@ -11,7 +11,6 @@ import org.slf4j.LoggerFactory;
 import org.springframework.http.ResponseEntity;
 import org.springframework.kafka.listener.AcknowledgingMessageListener;
 import org.springframework.kafka.support.Acknowledgment;
-import org.springframework.stereotype.Service;
 import org.springframework.web.client.HttpClientErrorException;
 
 
@@ -23,7 +22,6 @@ import java.nio.file.StandardOpenOption;
 import java.text.SimpleDateFormat;
 import java.util.concurrent.TimeUnit;
 
-@Service
 public class CustomListener implements AcknowledgingMessageListener<String,String> , Serializable {
 
     /**
@@ -159,8 +157,6 @@ public class CustomListener implements AcknowledgingMessageListener<String,Strin
             } catch (Exception e3) {
                 logger.error("Error while retry data !!!!"+" | Offset  : " + consumerRecord.offset() + " | partition : " + consumerRecord.partition() + " | error message : " + e3.getMessage());
             }
-        }finally {
-            acknowledgment.acknowledge();
         }
     }
 
