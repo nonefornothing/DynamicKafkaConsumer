@@ -6,6 +6,7 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.node.ObjectNode;
 import org.apache.kafka.clients.consumer.ConsumerRecord;
+import org.jetbrains.annotations.NotNull;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.http.ResponseEntity;
@@ -71,7 +72,7 @@ public class CustomListener implements AcknowledgingMessageListener<String,Strin
      */
 
     @Override
-    public void onMessage(ConsumerRecord<String,String> consumerRecord, Acknowledgment acknowledgment){
+    public void onMessage(@NotNull ConsumerRecord<String,String> consumerRecord, Acknowledgment acknowledgment){
 
         String encryptedMessage = null;
         String uriDestination = null;
@@ -94,14 +95,29 @@ public class CustomListener implements AcknowledgingMessageListener<String,Strin
                 logger.info("end send data : " + sdf.format(new java.util.Date()) + " | Offset  : " + consumerRecord.offset() + " | partition : " + consumerRecord.partition() + " | response : " + result.getBody());
             }
         }catch (HttpClientErrorException ec){
-            if (bodyReal != null) {
-                writeToFile(bodyReal);
-                logger.error("Error....!!! error message " + ec.getMessage() + " status code : " + ec.getStatusCode());
-                logger.error("write data | " + bodyReal + " with offset " + consumerRecord.offset() + " , partition " + consumerRecord.partition() + " to file");
-            }else{
-                logger.error("Body null");
+            if(ec.getStatusCode().value() == 400 || ec.getStatusCode().value() == 406){
+                if (bodyReal != null) {
+                    writeToFile(bodyReal);
+                    logger.error("Error....!!! error message " + ec.getMessage() + " status code : " + ec.getStatusCode());
+                    logger.error("write data | " + bodyReal + " with offset " + consumerRecord.offset() + " , partition " + consumerRecord.partition() + " to file");
+                }else{
+                    logger.error("Body null");
+                }
+                acknowledgment.acknowledge();
+            }else {
+                while(true){
+                    try {
+                        TimeUnit.MILLISECONDS.sleep(5000);
+                        logger.info("start resend data to PE : "+ sdf.format(new java.util.Date()) +" | Offset  : " + consumerRecord.offset() + " | partition : " + consumerRecord.partition()+" | data : "+ bodyReal + " | encryptedData : " + encryptedMessage);
+                        result = sending(encryptedMessage,uriDestination);
+                        acknowledgment.acknowledge();
+                        logger.info("end resend data : "+ sdf.format(new java.util.Date()) +" | Offset  : " + consumerRecord.offset() + " | partition : " + consumerRecord.partition() + " | response : " + result);
+                        break;
+                    }catch (Exception e1) {
+                        logger.error("Error retry forever ....!!! ==> " + " | Offset  : " + consumerRecord.offset() + " | partition : " + consumerRecord.partition() + " | error message : " + e1.getMessage());
+                    }
+                }
             }
-            acknowledgment.acknowledge();
         }catch (Exception e){
             logger.error("Error....!!!  " + e.getMessage());
             logger.error("Retry after "+initRetryAfterFailed+" ms ....!!!");
@@ -127,7 +143,6 @@ public class CustomListener implements AcknowledgingMessageListener<String,Strin
                     }catch (Exception e1) {
                         TimeUnit.MILLISECONDS.sleep((long) initRetryAfterFailed *i );
                         logger.error("Error retry ....!!! ==> " + i + " "+" | Offset  : " + consumerRecord.offset() + " | partition : " + consumerRecord.partition() + " | error message : " + e1.getMessage());
-                        continue;
                     }
                 }
                 if (i>retryCount){
@@ -205,7 +220,7 @@ public class CustomListener implements AcknowledgingMessageListener<String,Strin
         try {
             if(!bodyReal.isEmpty()) {
                 SimpleDateFormat sdf1 = new SimpleDateFormat("yyyyMMdd");
-                Files.write(Paths.get(dirFailedPE+sdf1.format(new java.util.Date())+ "-failed-pe.txt"), (bodyReal+ System.lineSeparator()).getBytes(), StandardOpenOption.CREATE, StandardOpenOption.APPEND);
+                Files.write(Paths.get(dirFailedPE+sdf1.format(new java.util.Date())+ "-DLQ-PE.txt"), (bodyReal+ System.lineSeparator()).getBytes(), StandardOpenOption.CREATE, StandardOpenOption.APPEND);
             }
             else{
                 logger.error("Error...!!! write to failed PE file ...!!! Data null" );

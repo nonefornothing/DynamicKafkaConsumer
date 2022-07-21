@@ -9,6 +9,7 @@ import org.springframework.stereotype.Component;
 
 import java.util.HashSet;
 import java.util.Map;
+import java.util.Objects;
 import java.util.Set;
 import java.util.concurrent.ConcurrentHashMap;
 
@@ -50,6 +51,7 @@ public class CustomKafkaContainerRegistration {
                 customContainerProperties.getContainerProperties());
         container.setConcurrency(concurrentConsumer);
         container.setAutoStartup(request.getConsumerActivation());
+        container.setAlwaysClientIdSuffix(true);
         this.registry.put(request.getConsumerId(), container);
         container.start();
     }
@@ -58,8 +60,12 @@ public class CustomKafkaContainerRegistration {
         return this.registry.get(consumerId);
     }
 
-    public MessageListenerContainer remove(String consumerId) {
-        return this.registry.remove(consumerId);
+    public void removeContainer(String consumerId) {
+        this.registry.remove(consumerId);
+    }
+
+    public void removeAllContainer(){
+        this.registry.clear();
     }
 
     public Set<String> getAllIds(){

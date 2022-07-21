@@ -14,7 +14,7 @@ public class KafkaConsumerResponse {
     private String consumerId;
     private String groupId;
 
-    private Boolean active;
+    private String status;
 
     private List<KafkaConsumerAssignmentResponse> assignments;
 }
