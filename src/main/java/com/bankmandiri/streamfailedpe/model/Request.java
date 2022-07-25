@@ -13,6 +13,6 @@ public class Request {
 
     private String topicName;
     private String consumerId;
-    private Boolean consumerActivation = true;
+    private final Boolean consumerActivation = true;
 
 }
