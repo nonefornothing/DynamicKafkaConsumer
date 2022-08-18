@@ -85,16 +85,18 @@ public class CustomListener implements AcknowledgingMessageListener<String,Strin
                 uriDestination =getUri(consumerRecord);
             }catch (Exception e){
                 writeToFile(consumerRecord.value());
-                logger.error("Error....!!!" + e.getMessage());
-                logger.error("write data with offset " + consumerRecord.offset() + " , partition " + consumerRecord.partition() + " to file");
+                logger.error("Error....!!! error message " + e.getMessage());
+                logger.error("write data | " + bodyReal + " with offset " + consumerRecord.offset() + " , partition " + consumerRecord.partition() + " to file");
+                acknowledgment.acknowledge();
             }
-            if (bodyReal != null) {
+            if (bodyReal != null || encryptedMessage != null || uriDestination != null) {
                 logger.info("start send data : " + sdf.format(new java.util.Date()) + " | Offset  : " + consumerRecord.offset() + " | partition : " + consumerRecord.partition() + " | data : " + bodyReal);
                 result = sending(encryptedMessage, uriDestination);
                 acknowledgment.acknowledge();
                 logger.info("end send data : " + sdf.format(new java.util.Date()) + " | Offset  : " + consumerRecord.offset() + " | partition : " + consumerRecord.partition() + " | response : " + result.getBody());
             }
-        }catch (HttpClientErrorException ec){
+        }
+        catch (HttpClientErrorException ec){
             if(ec.getStatusCode().value() == 400 || ec.getStatusCode().value() == 406){
                 if (bodyReal != null) {
                     writeToFile(bodyReal);
@@ -118,7 +120,8 @@ public class CustomListener implements AcknowledgingMessageListener<String,Strin
                     }
                 }
             }
-        }catch (Exception e){
+        }
+        catch (Exception e){
             logger.error("Error....!!!  " + e.getMessage());
             logger.error("Retry after "+initRetryAfterFailed+" ms ....!!!");
             try {
@@ -193,16 +196,18 @@ public class CustomListener implements AcknowledgingMessageListener<String,Strin
         }
     }
 
-    public String getBody(ConsumerRecord<String, String> consumerRecord,String jsonKeyUrl) throws JsonProcessingException {
+    public String getBody(ConsumerRecord<String, String> consumerRecord,String jsonKeyUrl) throws JsonProcessingException , IOException {
         String bodyReal;
-        ObjectNode node = (ObjectNode) new ObjectMapper().readTree(consumerRecord.value());
+        ObjectNode node = null;
+        node = (ObjectNode) new ObjectMapper().readTree(consumerRecord.value());
         parseMessages(node,jsonKeyUrl);
         bodyReal = node.toString();
         return bodyReal;
     }
 
-    private String getUri (ConsumerRecord<String, String> consumerRecord) throws JsonProcessingException {
-        ObjectNode node = (ObjectNode) new ObjectMapper().readTree(consumerRecord.value()) ;
+    private String getUri (ConsumerRecord<String, String> consumerRecord) throws JsonProcessingException , IOException {
+        ObjectNode node = null;
+        node = (ObjectNode) new ObjectMapper().readTree(consumerRecord.value());
         return getUri(node);
     }
 

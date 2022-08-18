@@ -28,14 +28,15 @@ public class UserController {
 		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss:SSS");
 		String token =null;
 		User usr = new User();
+
 		try {
 			if (user.getUsername().isEmpty()) {
-				s.setResponses_code(ErrorCodeEnum.USERNAME_NOT_VALID.getCode());
+				s.setStatus_code(ErrorCodeEnum.USERNAME_NOT_VALID.getCode());
 				s.setResponse_message(ErrorCodeEnum.USERNAME_NOT_VALID.getDefaultMsg());
 				s.setResponse_timestamp(sdf.format(new Date()));
 			}
 			if (user.getPassword().isEmpty()) {
-				s.setResponses_code(ErrorCodeEnum.PASS_NOT_VALID.getCode());
+				s.setStatus_code(ErrorCodeEnum.PASS_NOT_VALID.getCode());
 				s.setResponse_message(ErrorCodeEnum.PASS_NOT_VALID.getDefaultMsg());
 				s.setResponse_timestamp(sdf.format(new Date()));
 			}
@@ -43,15 +44,15 @@ public class UserController {
 			token = userService.signin(user.getUsername(), user.getPassword());
 			usr = userService.getUserByUsrName(user.getUsername());
 			usr.setToken("Bearer "+token);
-			s.setResponses_code(ErrorCodeEnum.SUCCESS.getCode());
+			s.setStatus_code(ErrorCodeEnum.SUCCESS.getCode());
 			s.setResponse_message(usr);
 			s.setResponse_timestamp(sdf.format(new Date()));
 		} catch (CustomException e) {
-			s.setResponses_code(ErrorCodeEnum.SIGNIN_FAILED.getCode());
+			s.setStatus_code(ErrorCodeEnum.SIGNIN_FAILED.getCode());
 			s.setResponse_message(e.getMessage());
 			s.setResponse_timestamp(sdf.format(new Date()));
 		}catch (Exception e) {
-			s.setResponses_code(ErrorCodeEnum.UNKNOWN_ERROR.getCode());
+			s.setStatus_code(ErrorCodeEnum.UNKNOWN_ERROR.getCode());
 			s.setResponse_message(ErrorCodeEnum.UNKNOWN_ERROR.getDefaultMsg());
 			s.setResponse_timestamp(sdf.format(new Date()));
 		}
@@ -63,7 +64,7 @@ public class UserController {
 		return userService.signup(user);
 	}
 
-	@PostMapping(value = "/{username}")
+	@DeleteMapping(value = "/{username}")
 	public String delete(@PathVariable String username) {
 		userService.deleteByUsrName(username);
 		return username;

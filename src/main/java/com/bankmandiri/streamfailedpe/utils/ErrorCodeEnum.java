@@ -6,12 +6,12 @@ import java.util.Map;
 public enum ErrorCodeEnum {
 	
 	SUCCESS						("00","Process successful"),
-	READ_DATA_EXIST				("00","Account Number Exist"),
+	READ_DATA_EXIST				("00","Consumer Data Exist"),
 	REQUEST_NOT_VALID			("01","Request not valid"),
-	ACTION_MODE_NOT_VALID		("02","Action Mode Not Valid"),
-	CREATE_ACCNUM_NULL		("03","Cannot Create Null Account Number"),
-	ACCNUM_NOT_EXIST			("04","Account Number Not Exist"),
-	DELETE_ACCNUM_NULL		("05","Cannot Delete Null or Empty Account Number"),
+	UPDATE_DATA_FAILED			("02","Update data failed"),
+	CREATE_CONSUMERDATA_NULL		("03","Cannot Create Null Consumer Data"),
+	CONSUMERDATA_NOT_EXIST			("04","Consumer Data Not Exist"),
+	DELETE_CONSUMERDATA_NULL		("05","Cannot Delete Null or Consumer Data"),
 	READ_DATA_FAILED			("06","Read data failed"),
 	ADD_DATA_FAILED				("07","Add data failed"),
 	DELETE_DATA_FAILED			("08","Delete data failed"),
@@ -21,8 +21,10 @@ public enum ErrorCodeEnum {
 	SIGNIN_FAILED				("11","Signin failed"),
 	USERNAME_NOT_VALID			("12","Username Not Valid"),
 	PASS_NOT_VALID				("13","Password Not Valid"),
-	
-	
+	CONSUMERNAME_NOT_VALID		("14","Consumer Name Must Lowercase"),
+	CONSUMERTOPIC_NOT_VALID		("15","Consumer TOPIC Must CAPITAL"),
+
+
 	UNKNOWN_ERROR				("99","Unknown Error"),
 	;
 	

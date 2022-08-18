@@ -31,13 +31,14 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 
     // Entry points
     http.authorizeRequests()//
-        .antMatchers("/users/signin").permitAll()
+            .antMatchers("/users/signin").permitAll()//
+            .antMatchers("/users/signup").permitAll()///
+//            .antMatchers("**/crd").permitAll()
         .antMatchers("/users/refresh").permitAll()
         .antMatchers("/users/me").permitAll()
-        .antMatchers("/users/signup").hasRole("ADMIN")
-        .antMatchers("/users/delete").hasRole("ADMIN")
+//        .antMatchers("/users/signup").hasRole("ADMIN")
+//        .antMatchers("/users/delete").hasRole("ADMIN")
 
-//        .antMatchers("**/crd").hasRole("ADMIN")
         .antMatchers("**/consumer-management").permitAll()
 
 
