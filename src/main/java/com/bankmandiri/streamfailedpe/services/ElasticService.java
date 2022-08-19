@@ -9,7 +9,7 @@ public interface ElasticService {
 
 	public String insert(ConsumerData data);
 
-	public ConsumerData getById(ConsumerData data);
+	public ConsumerData getById(String data);
 
 	public String deleteById(ConsumerData data);
 

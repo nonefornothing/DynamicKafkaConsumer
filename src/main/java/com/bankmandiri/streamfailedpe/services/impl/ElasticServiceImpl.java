@@ -12,9 +12,6 @@ import org.elasticsearch.action.index.IndexRequest;
 import org.elasticsearch.action.index.IndexResponse;
 import org.elasticsearch.action.search.SearchRequest;
 import org.elasticsearch.action.search.SearchResponse;
-import org.elasticsearch.action.support.master.AcknowledgedResponse;
-import org.elasticsearch.action.update.UpdateRequest;
-import org.elasticsearch.action.update.UpdateResponse;
 import org.elasticsearch.client.RequestOptions;
 import org.elasticsearch.client.RestHighLevelClient;
 import org.elasticsearch.common.xcontent.XContentType;
@@ -22,7 +19,6 @@ import org.elasticsearch.index.query.QueryBuilders;
 import org.elasticsearch.search.SearchHit;
 import org.elasticsearch.search.builder.SearchSourceBuilder;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
@@ -62,9 +58,9 @@ public class ElasticServiceImpl implements ElasticService {
 
 	@SuppressWarnings("deprecation")
 	@Override
-	public ConsumerData getById(ConsumerData data) {
+	public ConsumerData getById(String consumerName) {
 		try {
-			GetRequest getRequest = new GetRequest(CONSUMER_INDEX, CONSUMER_TYPE, data.getConsumerName());
+			GetRequest getRequest = new GetRequest(CONSUMER_INDEX, CONSUMER_TYPE, consumerName);
 			GetResponse getResponse = client.get(getRequest, RequestOptions.DEFAULT);
 			Map<String, Object> resultMap = getResponse.getSource();
 			return convertFromMap(resultMap);
@@ -76,9 +72,9 @@ public class ElasticServiceImpl implements ElasticService {
 
 	@SuppressWarnings("deprecation")
 	@Override
-	public String deleteById(ConsumerData data) {
+	public String deleteById(ConsumerData consumerName) {
 		try {
-			DeleteRequest deleteRequest = new DeleteRequest(CONSUMER_INDEX, CONSUMER_TYPE, data.getConsumerName());
+			DeleteRequest deleteRequest = new DeleteRequest(CONSUMER_INDEX, CONSUMER_TYPE, consumerName.getConsumerName());
 			DeleteResponse response = client.delete(deleteRequest, RequestOptions.DEFAULT);
 			return response.getResult().name();
 		} catch (Exception e) {

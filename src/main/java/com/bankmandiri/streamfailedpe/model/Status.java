@@ -28,4 +28,6 @@ public class Status {
 	private Object response_message;
 	private String response_timestamp;
 
+
+
 }

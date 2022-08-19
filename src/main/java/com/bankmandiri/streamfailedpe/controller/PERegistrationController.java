@@ -57,140 +57,163 @@ public class PERegistrationController implements ErrorController {
 
     @PostMapping("/create")
     public ResponseEntity<Status> createPEData(@RequestBody ConsumerData consumerData) {
-        Status s = new Status();
+        Status sts = new Status();
         SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss:SSS");
         try {
-            s = RequestValidator.validate(consumerData);
-            if(s.getConsumerName() != null && !s.getConsumerTopic().isEmpty()) {
-                return new ResponseEntity<>(s,CustomHeader.setHeaders(),HttpStatus.BAD_REQUEST);
+            sts = RequestValidator.validate(consumerData);
+            if(sts.getConsumerName() != null && !sts.getConsumerTopic().isEmpty()) {
+                logger.info("Client request invalid data || " + sts);
+                return new ResponseEntity<>(sts,CustomHeader.setHeaders(),HttpStatus.BAD_REQUEST);
             }
-            ConsumerData consumerResult;
+            sts.setConsumerName(consumerData.getConsumerName());
+            sts.setConsumerTopic(consumerData.getConsumerTopic());
+            sts.setResponse_timestamp(sdf.format(new Date()));
             try {
-                consumerResult = elasticService.getById(consumerData);
-
+                ConsumerData consumerResult = elasticService.getById(consumerData.getConsumerName());
                 if(consumerResult == null || consumerResult.getConsumerName() == null || consumerResult.getConsumerName().isEmpty()) {
                     try {
                         String result = elasticService.insert(consumerData);
                         if (result.equalsIgnoreCase("CREATED")) {
-                            s.setResponses_code(ErrorCodeEnum.SUCCESS.getCode());
-                            s.setResponse_message(ErrorCodeEnum.SUCCESS.getDefaultMsg());
+                            sts.setResponses_code(ErrorCodeEnum.SUCCESS.getCode());
+                            sts.setResponse_message(ErrorCodeEnum.SUCCESS.getDefaultMsg());
+                            logger.info("Success for add data to elasticSearch || " + sts);
                         }else {
-                            logger.error("error while add consumerData to elasticSearch : " +  result);
-                            s.setResponses_code(ErrorCodeEnum.ADD_DATA_FAILED.getCode());
-                            s.setResponse_message(ErrorCodeEnum.ADD_DATA_FAILED.getDefaultMsg());
+                            sts.setResponses_code(ErrorCodeEnum.ADD_DATA_FAILED.getCode());
+                            sts.setResponse_message(ErrorCodeEnum.ADD_DATA_FAILED.getDefaultMsg());
+                            logger.error("error while add consumerData to elasticSearch : " + sts);
                         }
-                        s.setConsumerName(consumerData.getConsumerName());
-                        s.setConsumerTopic(consumerData.getConsumerTopic());
                     } catch (Exception e) {
-                        logger.error("Error while insert data to elasticSearch || " + e.getMessage());
+                        sts.setResponses_code(ErrorCodeEnum.ADD_DATA_FAILED.getCode());
+                        sts.setResponse_message(ErrorCodeEnum.ADD_DATA_FAILED.getDefaultMsg());
+                        logger.error("Error while insert data to elasticSearch || " + sts);
                     }
                 }else {
-                    s.setResponses_code(ErrorCodeEnum.DATA_EXIST.getCode());
-                    s.setResponse_message(ErrorCodeEnum.DATA_EXIST.getDefaultMsg());
-                    s.setConsumerName(consumerData.getConsumerName());
-                    s.setConsumerTopic(consumerData.getConsumerTopic());
+                    sts.setResponses_code(ErrorCodeEnum.DATA_EXIST.getCode());
+                    sts.setResponse_message(ErrorCodeEnum.DATA_EXIST.getDefaultMsg());
+                    logger.info("Data Exist in ElasticSearch || " + sts);
                 }
-                s.setResponse_timestamp(sdf.format(new Date()));
             }
             catch (ElasticsearchStatusException e) {
-                logger.error("index not exist");
+                sts.setResponses_code(ErrorCodeEnum.INDEX_NOT_EXIST.getCode());
+                sts.setResponse_message(ErrorCodeEnum.INDEX_NOT_EXIST.getDefaultMsg());
+                logger.error("index not exist || " + sts);
             }
         } catch (Exception e) {
-            logger.error("Error while validate request || " + e.getMessage());
-            s.setResponses_code(ErrorCodeEnum.UNKNOWN_ERROR.getCode());
-            s.setResponse_message(ErrorCodeEnum.UNKNOWN_ERROR.getDefaultMsg());
-            s.setConsumerName(consumerData.getConsumerName());
-            s.setConsumerTopic(consumerData.getConsumerTopic());
-            s.setResponse_timestamp(sdf.format(new Date()));
+            sts.setResponses_code(ErrorCodeEnum.UNKNOWN_ERROR.getCode());
+            sts.setResponse_message(ErrorCodeEnum.UNKNOWN_ERROR.getDefaultMsg());
+            logger.error("Error while validate request || " + sts);
         }
-        return new ResponseEntity<>(s,CustomHeader.setHeaders(),HttpStatus.CREATED);
+        return new ResponseEntity<>(sts,CustomHeader.setHeaders(),HttpStatus.CREATED);
     }
 
     @PutMapping("/update")
-    public ResponseEntity<Status> updatePEData(@RequestBody ConsumerData consumerData){
+    public ResponseEntity<Status> updatePEData(@PathVariable String consumerName,@RequestBody ConsumerData consumerData){
         Status sts= new Status();
         SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss:SSS");
-        String isDelete;
-        String result;
-
         try{
-            ConsumerData peResult = elasticService.getById(consumerData);
-            if(peResult != null && !peResult.getConsumerName().isEmpty()) {
-                try {
-                    isDelete = elasticService.deleteById(consumerData);
+            sts = RequestValidator.validate(consumerData);
+            if(sts.getConsumerName() != null && !sts.getConsumerTopic().isEmpty()) {
+                logger.info("Client request invalid data || " + sts);
+                return new ResponseEntity<>(sts,CustomHeader.setHeaders(),HttpStatus.BAD_REQUEST);
+            }
+            sts.setConsumerName(consumerData.getConsumerName());
+            sts.setConsumerTopic(consumerData.getConsumerTopic());
+            sts.setResponse_timestamp(sdf.format(new Date()));
+            try{
+                ConsumerData peResult = elasticService.getById(consumerName);
+                if(peResult != null && !peResult.getConsumerName().isEmpty()) {
                     try {
-                        result = elasticService.insert(consumerData);
-                        if(isDelete.equalsIgnoreCase("DELETED") && result.equalsIgnoreCase("CREATED")) {
-                            sts.setResponses_code(ErrorCodeEnum.SUCCESS.getCode());
-                            sts.setResponse_message(ErrorCodeEnum.SUCCESS.getDefaultMsg());
-                        }else {
+                        String isDelete = elasticService.deleteById(consumerData);
+                        try {
+                            String result = elasticService.insert(consumerData);
+                            if(isDelete.equalsIgnoreCase("DELETED") && result.equalsIgnoreCase("CREATED")) {
+                                sts.setResponses_code(ErrorCodeEnum.SUCCESS.getCode());
+                                sts.setResponse_message(ErrorCodeEnum.SUCCESS.getDefaultMsg());
+                            }else {
+                                sts.setResponses_code(ErrorCodeEnum.UPDATE_DATA_FAILED.getCode());
+                                sts.setResponse_message(ErrorCodeEnum.UPDATE_DATA_FAILED.getDefaultMsg());
+                            }
+                        }catch (Exception e){
                             sts.setResponses_code(ErrorCodeEnum.UPDATE_DATA_FAILED.getCode());
                             sts.setResponse_message(ErrorCodeEnum.UPDATE_DATA_FAILED.getDefaultMsg());
+                            logger.error("Error while insert data || " + consumerData.getConsumerName());
                         }
-                        sts.setConsumerName(consumerData.getConsumerName());
-                        sts.setConsumerTopic(consumerData.getConsumerTopic());
                     }catch (Exception e){
-                        logger.error("Error while insert data || " + consumerData.getConsumerName());
-                    }
-                }catch (Exception e){
-                    logger.error("Error while delete data || " + consumerData.getConsumerName());
-                }
-            }else {
-                sts.setResponses_code(ErrorCodeEnum.CONSUMERDATA_NOT_EXIST.getCode());
-                sts.setResponse_message(ErrorCodeEnum.CONSUMERDATA_NOT_EXIST.getDefaultMsg());
-                sts.setConsumerName(consumerData.getConsumerName());
-                sts.setConsumerTopic(consumerData.getConsumerTopic());
-            }
-        }catch (Exception e){
-            logger.error("Error while find data || " + consumerData.getConsumerName());
-        }
-
-        sts.setResponse_timestamp(sdf.format(new Date()));
-
-        return new ResponseEntity<>(sts,CustomHeader.setHeaders(),HttpStatus.CREATED);
-
-    }
-
-    @PostMapping("/delete")
-    public ResponseEntity<Status> deletePEData(@RequestBody String consumerName){
-        Status sts = new Status();
-        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss:SSS");
-        try {
-            ConsumerData result = elasticService.getById(consumerData);
-            if (result != null) {
-                try{
-                    String isDelete = elasticService.deleteById(consumerData);
-                    if (isDelete.equalsIgnoreCase("DELETED")) {
-                        sts.setResponses_code(ErrorCodeEnum.SUCCESS.getCode());
-                        sts.setResponse_message(ErrorCodeEnum.SUCCESS.getDefaultMsg());
-                        sts.setConsumerName(consumerData.getConsumerName());
-                        sts.setConsumerTopic(consumerData.getConsumerTopic());
-                    } else if (isDelete.equalsIgnoreCase("NOT_FOUND")) {
-                        sts.setResponses_code(ErrorCodeEnum.CONSUMERDATA_NOT_EXIST.getCode());
-                        sts.setResponse_message(ErrorCodeEnum.CONSUMERDATA_NOT_EXIST.getDefaultMsg());
-                        sts.setConsumerName(consumerData.getConsumerName());
-                        sts.setConsumerTopic(consumerData.getConsumerTopic());
-                    } else {
                         sts.setResponses_code(ErrorCodeEnum.DELETE_DATA_FAILED.getCode());
                         sts.setResponse_message(ErrorCodeEnum.DELETE_DATA_FAILED.getDefaultMsg());
-                        sts.setConsumerName(consumerData.getConsumerName());
-                        sts.setConsumerTopic(consumerData.getConsumerTopic());
+                        logger.error("Error while delete data in elasticSearch || " + sts);
                     }
-                }catch (Exception e){
-                        logger.error("Error while delete data || " + consumerData.getConsumerName());
-                    }
-                } else {
+                }else {
                     sts.setResponses_code(ErrorCodeEnum.CONSUMERDATA_NOT_EXIST.getCode());
                     sts.setResponse_message(ErrorCodeEnum.CONSUMERDATA_NOT_EXIST.getDefaultMsg());
                     sts.setConsumerName(consumerData.getConsumerName());
                     sts.setConsumerTopic(consumerData.getConsumerTopic());
                 }
             }catch (Exception e){
-                logger.error("Error while find data || " + consumerData.getConsumerName());
+                sts.setResponses_code(ErrorCodeEnum.INDEX_NOT_EXIST.getCode());
+                sts.setResponse_message(ErrorCodeEnum.INDEX_NOT_EXIST.getDefaultMsg());
+                logger.error("index not exist || " + sts);
             }
+        }catch (Exception e){
+            sts.setResponses_code(ErrorCodeEnum.UNKNOWN_ERROR.getCode());
+            sts.setResponse_message(ErrorCodeEnum.UNKNOWN_ERROR.getDefaultMsg());
+            logger.error("Error while validate request || " + sts);
+        }
+        return new ResponseEntity<>(sts,CustomHeader.setHeaders(),HttpStatus.CREATED);
+    }
 
-        sts.setResponse_timestamp(sdf.format(new Date()));
-
+    @PostMapping("/delete")
+    public ResponseEntity<Status> deletePEData(@RequestBody ConsumerData consumerData){
+        Status sts = new Status();
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss:SSS");
+        try{
+            sts = RequestValidator.validate(consumerData);
+            if(sts.getConsumerName() != null && !sts.getConsumerTopic().isEmpty()) {
+                logger.info("Client request invalid data || " + sts);
+                return new ResponseEntity<>(sts,CustomHeader.setHeaders(),HttpStatus.BAD_REQUEST);
+            }
+            sts.setConsumerName(consumerData.getConsumerName());
+            sts.setConsumerTopic(consumerData.getConsumerTopic());
+            sts.setResponse_timestamp(sdf.format(new Date()));
+            try {
+                ConsumerData result = elasticService.getById(consumerData.getConsumerName());
+                if (result == null || result.getConsumerName() == null || result.getConsumerName().isEmpty()) {
+                    try{
+                        String isDelete = elasticService.deleteById(consumerData);
+                        if (isDelete.equalsIgnoreCase("DELETED")) {
+                            sts.setResponses_code(ErrorCodeEnum.SUCCESS.getCode());
+                            sts.setResponse_message(ErrorCodeEnum.SUCCESS.getDefaultMsg());
+                            logger.info("Success for add data to elasticSearch || " + sts);
+                        } else if (isDelete.equalsIgnoreCase("NOT_FOUND")) {
+                            sts.setResponses_code(ErrorCodeEnum.CONSUMERDATA_NOT_EXIST.getCode());
+                            sts.setResponse_message(ErrorCodeEnum.CONSUMERDATA_NOT_EXIST.getDefaultMsg());
+                            logger.info("ConsumerData not found in elasticSearch || " + sts);
+                        } else {
+                            sts.setResponses_code(ErrorCodeEnum.DELETE_DATA_FAILED.getCode());
+                            sts.setResponse_message(ErrorCodeEnum.DELETE_DATA_FAILED.getDefaultMsg());
+                            logger.error("Error while delete data in elasticSearch || " + sts);
+                        }
+                    }catch (Exception e){
+                        sts.setResponses_code(ErrorCodeEnum.DELETE_DATA_FAILED.getCode());
+                        sts.setResponse_message(ErrorCodeEnum.DELETE_DATA_FAILED.getDefaultMsg());
+                        logger.error("Error while delete data in elasticSearch || " + sts);
+                    }
+                } else {
+                    sts.setResponses_code(ErrorCodeEnum.DATA_EXIST.getCode());
+                    sts.setResponse_message(ErrorCodeEnum.DATA_EXIST.getDefaultMsg());
+                    logger.info("Data Exist in ElasticSearch || " + sts);
+                }
+            }
+            catch (Exception e){
+                sts.setResponses_code(ErrorCodeEnum.INDEX_NOT_EXIST.getCode());
+                sts.setResponse_message(ErrorCodeEnum.INDEX_NOT_EXIST.getDefaultMsg());
+                logger.error("index not exist || " + sts);
+            }
+        }catch (Exception e){
+            sts.setResponses_code(ErrorCodeEnum.UNKNOWN_ERROR.getCode());
+            sts.setResponse_message(ErrorCodeEnum.UNKNOWN_ERROR.getDefaultMsg());
+            logger.error("Error while validate request || " + sts);
+        }
         return new ResponseEntity<>(sts,CustomHeader.setHeaders(),HttpStatus.OK);
     }
 

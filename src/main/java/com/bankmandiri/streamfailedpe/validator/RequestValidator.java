@@ -49,7 +49,6 @@ public class RequestValidator {
 				sts.setConsumerName(consumerData.getConsumerName());
 				sts.setConsumerTopic(consumerData.getConsumerTopic());
 			}
-
 			sts.setResponse_timestamp(sdf.format(new Date()));
 		}
 		catch (Exception e) {
