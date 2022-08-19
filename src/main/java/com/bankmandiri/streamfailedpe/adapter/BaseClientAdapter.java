@@ -22,8 +22,11 @@ public class BaseClientAdapter {
 	
 	@Value("${pe.password}")
 	private String pePassword;
-	
-	 /**
+
+	public BaseClientAdapter() {
+	}
+
+	/**
     *
     * Base client adapter to client
     * 
@@ -50,9 +53,9 @@ public class BaseClientAdapter {
 	//set header for authentication
 	private HttpHeaders setHeaders() {
 		String authStr = peUser+":"+pePassword;
-	    String base64Creds = Base64.getEncoder().encodeToString(authStr.getBytes());
+	    String base64Cred = Base64.getEncoder().encodeToString(authStr.getBytes());
 	    HttpHeaders headers = new HttpHeaders();
-	    headers.add("Authorization", "Basic " + base64Creds);
+	    headers.add("Authorization", "Basic " + base64Cred);
 	    headers.add("Accept", "application/json");
 	    headers.add("Content-Type", "application/json");
 		return headers;

@@ -11,7 +11,7 @@ public class ClientAdapterImpl extends BaseClientAdapter implements ClientAdapte
 
 	/**
     *
-    * CLient adapter for REST client
+    * Client adapter for REST client
     * 
     */
 

@@ -6,14 +6,14 @@ import org.springframework.kafka.listener.ContainerProperties;
 
 public class CustomContainerProperties {
 
-    private String topic;
-    private String consumerId;
-    private StreamService streamService;
-    private String jsonKeyUrl;
-    private String secretKey;
-    private int initRetryAfterFailed;
-    private int retryCount;
-    private String dirFailedPE;
+    private final String topic;
+    private final String consumerId;
+    private final StreamService streamService;
+    private final String jsonKeyUrl;
+    private final String secretKey;
+    private final int initRetryAfterFailed;
+    private final int retryCount;
+    private final String dirFailedPE;
 
 
     public CustomContainerProperties(String topic, String consumerId,StreamService streamService, String jsonKeyUrl, String secretKey ,int initRetryAfterFailed, int retryCount, String dirFailedPE) {
@@ -25,22 +25,6 @@ public class CustomContainerProperties {
         this.initRetryAfterFailed = initRetryAfterFailed;
         this.retryCount = retryCount;
         this.dirFailedPE = dirFailedPE;
-    }
-
-    public String getTopic() {
-        return topic;
-    }
-
-    public void setTopic(String topic) {
-        this.topic = topic;
-    }
-
-    public String getConsumerId() {
-        return consumerId;
-    }
-
-    public void setConsumerId(String consumerId) {
-        this.consumerId = consumerId;
     }
 
     public ContainerProperties getContainerProperties() {

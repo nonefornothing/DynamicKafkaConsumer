@@ -22,9 +22,10 @@ import java.util.List;
 public class Status {
 
 	private final String engine_type = "DYNAMIC-CONSUMER";
-	private String status_code;
-	private String status_message;
-	private List<StatusList> response_list;
+	private String consumerName;
+	private String consumerTopic;
+	private String responses_code;
+	private Object response_message;
 	private String response_timestamp;
 
 }

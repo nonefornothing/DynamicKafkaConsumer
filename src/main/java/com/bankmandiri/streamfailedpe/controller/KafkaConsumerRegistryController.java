@@ -124,13 +124,12 @@ public class KafkaConsumerRegistryController {
         if (Objects.isNull(listenerContainer)) {
             throw new RuntimeException(String.format("Consumer with id %s is not found", consumerId));
         } else if (listenerContainer.isRunning() || listenerContainer.isContainerPaused() || listenerContainer.isPauseRequested()) {
-            logger.info("Consumer with id %s is running , process to stop" , consumerId);
             listenerContainer.stop();
             customKafkaContainerRegistration.removeContainer(consumerId);
-            logger.info("Consumer with id %s is deleted " , consumerId);
+            logger.info("Consumer with id %s is deleted " + consumerId);
         } else if (!listenerContainer.isRunning()){
             customKafkaContainerRegistration.removeContainer(consumerId);
-            logger.info("Consumer with id %s is deleted " , consumerId);
+            logger.info("Consumer with id %s is deleted " + consumerId);
         }
     }
 
