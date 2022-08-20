@@ -26,7 +26,7 @@ public class UserController {
 	public ResponseEntity login(@RequestBody User user) {
 		UserResponses s= new UserResponses();
 		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss:SSS");
-		String token =null;
+		String token;
 		User usr = new User();
 
 		try {

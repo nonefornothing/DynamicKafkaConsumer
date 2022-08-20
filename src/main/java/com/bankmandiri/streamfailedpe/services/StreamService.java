@@ -4,6 +4,6 @@ import org.springframework.http.ResponseEntity;
 
 public interface StreamService {
 	
-	public ResponseEntity<String> sendData (String request, String uri) throws Exception;
+	ResponseEntity<String> sendData (String request, String uri) throws Exception;
 
 }

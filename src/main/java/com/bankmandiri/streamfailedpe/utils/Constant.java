@@ -2,8 +2,6 @@ package com.bankmandiri.streamfailedpe.utils;
 
 public interface Constant {
 
-    String TYPE = "param";
-    
     String USER_TYPE = "userData";
     String USER_INDEX = "users";
 

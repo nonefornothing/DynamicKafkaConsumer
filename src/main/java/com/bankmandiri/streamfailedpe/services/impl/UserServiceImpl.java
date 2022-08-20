@@ -31,9 +31,9 @@ import static com.bankmandiri.streamfailedpe.utils.Constant.USER_TYPE;
 @Service
 public class UserServiceImpl implements UserService {
 
-	private RestHighLevelClient client;
+	private final RestHighLevelClient client;
 
-	private ObjectMapper objectMapper;
+	private final ObjectMapper objectMapper;
 
 	@Autowired
 	private PasswordEncoder passwordEncoder;
@@ -61,16 +61,15 @@ public class UserServiceImpl implements UserService {
 
 	@SuppressWarnings("deprecation")
 	@Override
-	public String create(User usr) {
+	public void create(User usr) {
 		try {
 			IndexRequest indexRequest = new IndexRequest(USER_INDEX, USER_TYPE, usr.getUsername()).source(convertToMap(usr),
 					XContentType.JSON);
 			IndexResponse indexResponse = client.index(indexRequest, RequestOptions.DEFAULT);
-			return indexResponse.getResult().name();
+			indexResponse.getResult();
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
-		return null;
 	}
 
 	@SuppressWarnings("deprecation")
@@ -92,15 +91,14 @@ public class UserServiceImpl implements UserService {
 	}
 
 	@Override
-	public String deleteByUsrName(String usr) {
+	public void deleteByUsrName(String usr) {
 		try {
 			DeleteRequest deleteRequest = new DeleteRequest(USER_INDEX, usr);
 			DeleteResponse response = client.delete(deleteRequest, RequestOptions.DEFAULT);
-			return response.getResult().name();
+			response.getResult();
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
-		return null;
 	}
 
 	@Override

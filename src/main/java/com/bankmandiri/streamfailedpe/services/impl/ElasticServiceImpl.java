@@ -3,7 +3,6 @@ package com.bankmandiri.streamfailedpe.services.impl;
 import com.bankmandiri.streamfailedpe.model.ConsumerData;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.bankmandiri.streamfailedpe.services.ElasticService;
-import org.elasticsearch.action.admin.indices.delete.DeleteIndexRequest;
 import org.elasticsearch.action.delete.DeleteRequest;
 import org.elasticsearch.action.delete.DeleteResponse;
 import org.elasticsearch.action.get.GetRequest;
@@ -31,9 +30,9 @@ import static com.bankmandiri.streamfailedpe.utils.Constant.CONSUMER_TYPE;
 @Service
 public class ElasticServiceImpl implements ElasticService {
 
-	private RestHighLevelClient client;
+	private final RestHighLevelClient client;
 
-	private ObjectMapper objectMapper;
+	private final ObjectMapper objectMapper;
 
     @Autowired
     public ElasticServiceImpl(RestHighLevelClient client, ObjectMapper objectMapper) {
@@ -86,7 +85,7 @@ public class ElasticServiceImpl implements ElasticService {
 	@Override
 	public List<ConsumerData> getListConsumerData() {
 		try {
-			SearchRequest searchRequest = buildSearchRequest(CONSUMER_INDEX, CONSUMER_TYPE);
+			SearchRequest searchRequest = buildSearchRequest();
 			SearchSourceBuilder searchSourceBuilder = new SearchSourceBuilder();
 			searchSourceBuilder.query(QueryBuilders.matchAllQuery());
 			searchRequest.source(searchSourceBuilder);
@@ -108,10 +107,10 @@ public class ElasticServiceImpl implements ElasticService {
 	}
 
 	@SuppressWarnings("deprecation")
-	private SearchRequest buildSearchRequest(String index, String type) {
+	private SearchRequest buildSearchRequest() {
 		SearchRequest searchRequest = new SearchRequest();
-		searchRequest.indices(index);
-		searchRequest.types(type);
+		searchRequest.indices(CONSUMER_INDEX);
+		searchRequest.types(CONSUMER_TYPE);
 		return searchRequest;
 	}
 

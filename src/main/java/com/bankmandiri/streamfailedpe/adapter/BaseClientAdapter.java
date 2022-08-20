@@ -23,9 +23,6 @@ public class BaseClientAdapter {
 	@Value("${pe.password}")
 	private String pePassword;
 
-	public BaseClientAdapter() {
-	}
-
 	/**
     *
     * Base client adapter to client
