@@ -1,24 +1,51 @@
 package com.bankmandiri.streamfailedpe.security;
 
+import com.bankmandiri.streamfailedpe.model.Role;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.method.configuration.EnableGlobalMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.crypto.password.NoOpPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
+
 
 @Configuration
 @EnableWebSecurity
 @EnableGlobalMethodSecurity(prePostEnabled = true)
 public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 
+  @Value("${root.user}")
+  private String rootUser;
+
+  @Value("${root.password}")
+  private String rootPassword;
+
   @Autowired
   private JwtTokenProvider jwtTokenProvider;
+
+  @Override
+  protected void configure(AuthenticationManagerBuilder auth) throws Exception {
+    auth.inMemoryAuthentication()
+            .withUser(rootUser)
+            .password(rootPassword)
+            .roles(Role.ADMIN.toString())
+            .and()
+            .withUser("Zack")
+            .password("aayush")
+            .roles("admin_role")
+            .and()
+            .withUser("GFG")
+            .password("Helloword")
+            .roles("student");
+  }
 
   @Override
   protected void configure(HttpSecurity http) throws Exception {
@@ -32,10 +59,11 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     // Entry points
     http.authorizeRequests()//
             .antMatchers("/users/signin").permitAll()//
-            .antMatchers("/users/signup").permitAll()///
-//            .antMatchers("**/crd").permitAll()
-        .antMatchers("/users/refresh").permitAll()
-        .antMatchers("/users/me").permitAll()
+            .antMatchers("/users/signup").hasRole(Role.ADMIN.toString())
+            .antMatchers("/delete").hasRole(Role.ADMIN.toString())
+            .antMatchers("/delete").hasRole("admin_role")
+            .antMatchers("/details").hasAnyRole("admin_role","student")
+
 //        .antMatchers("/users/signup").hasRole("ADMIN")
 //        .antMatchers("/users/delete").hasRole("ADMIN")
 
@@ -55,26 +83,15 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     // http.httpBasic();
   }
 
-//  @Override
-//  public void configure(WebSecurity web) throws Exception {
-//	    // Allow swagger to be accessed without authentication
-//	    web.ignoring().antMatchers("/v2/api-docs")//
-//	        .antMatchers("/swagger-resources/**")//
-//	        .antMatchers("/swagger-ui.html")//
-//	        .antMatchers("/configuration/**")//
-//	        .antMatchers("/webjars/**")//
-//	        .antMatchers("/public")
-//	        
-//	        // Un-secure H2 Database (for testing purposes, H2 console shouldn't be unprotected in production)
-//	        .and()
-//	        .ignoring()
-//	        .antMatchers("/h2-console/**/**");;
-//	  }
-
   @Bean
   public PasswordEncoder passwordEncoder() {
     return new BCryptPasswordEncoder(12);
   }
+
+//  @Bean
+//  public PasswordEncoder getPasswordEncoder(){
+//    return NoOpPasswordEncoder.getInstance();
+//  }
 
   @Override
   @Bean

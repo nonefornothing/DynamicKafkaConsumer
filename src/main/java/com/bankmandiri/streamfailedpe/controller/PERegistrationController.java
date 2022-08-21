@@ -46,6 +46,7 @@ public class PERegistrationController implements ErrorController {
         List<ConsumerData> result = null;
         try{
             result = elasticService.getListConsumerData();
+            logger.info("registered consumer data : " + result.toString());
         }catch (Exception e){
             logger.error("Error while get all data from index");    
         }
