@@ -31,21 +31,21 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
   @Autowired
   private JwtTokenProvider jwtTokenProvider;
 
-  @Override
-  protected void configure(AuthenticationManagerBuilder auth) throws Exception {
-    auth.inMemoryAuthentication()
-            .withUser(rootUser)
-            .password(rootPassword)
-            .roles(Role.ADMIN.toString())
-            .and()
-            .withUser("Zack")
-            .password("aayush")
-            .roles("admin_role")
-            .and()
-            .withUser("GFG")
-            .password("Helloword")
-            .roles("student");
-  }
+//  @Override
+//  protected void configure(AuthenticationManagerBuilder auth) throws Exception {
+//    auth.inMemoryAuthentication()
+//            .withUser(rootUser)
+//            .password(rootPassword)
+//            .roles(Role.ADMIN.toString())
+//            .and()
+//            .withUser("Zack")
+//            .password("aayush")
+//            .roles("admin_role")
+//            .and()
+//            .withUser("GFG")
+//            .password("Helloword")
+//            .roles("student");
+//  }
 
   @Override
   protected void configure(HttpSecurity http) throws Exception {

@@ -40,7 +40,7 @@ public class RequestValidator {
 				sts.setConsumerTopic(consumerData.getConsumerTopic());
 			}
 
-			Pattern patternConsumerTopic = Pattern.compile("[A-Z]*");
+			Pattern patternConsumerTopic = Pattern.compile("[A-Z_]*");
 			Matcher matcherConsumerTopic = patternConsumerTopic.matcher(consumerData.getConsumerTopic());
 
 			if (!matcherConsumerTopic.matches()) {

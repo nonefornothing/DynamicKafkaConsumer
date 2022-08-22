@@ -71,9 +71,9 @@ public class ElasticServiceImpl implements ElasticService {
 
 	@SuppressWarnings("deprecation")
 	@Override
-	public String deleteById(ConsumerData consumerName) {
+	public String deleteById(String consumerName) {
 		try {
-			DeleteRequest deleteRequest = new DeleteRequest(CONSUMER_INDEX, CONSUMER_TYPE, consumerName.getConsumerName());
+			DeleteRequest deleteRequest = new DeleteRequest(CONSUMER_INDEX, CONSUMER_TYPE, consumerName);
 			DeleteResponse response = client.delete(deleteRequest, RequestOptions.DEFAULT);
 			return response.getResult().name();
 		} catch (Exception e) {

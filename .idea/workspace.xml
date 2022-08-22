@@ -4,7 +4,15 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="3242b90b-a426-487a-94aa-f1c6c72fa48e" name="Default Changelist" comment="" />
+    <list default="true" id="3242b90b-a426-487a-94aa-f1c6c72fa48e" name="Default Changelist" comment="">
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/bankmandiri/streamfailedpe/controller/PERegistrationController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/bankmandiri/streamfailedpe/controller/PERegistrationController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/bankmandiri/streamfailedpe/security/WebSecurityConfig.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/bankmandiri/streamfailedpe/security/WebSecurityConfig.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/bankmandiri/streamfailedpe/services/ElasticService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/bankmandiri/streamfailedpe/services/ElasticService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/bankmandiri/streamfailedpe/services/impl/ElasticServiceImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/bankmandiri/streamfailedpe/services/impl/ElasticServiceImpl.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/bankmandiri/streamfailedpe/validator/RequestValidator.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/bankmandiri/streamfailedpe/validator/RequestValidator.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/application-test.properties" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/application-test.properties" afterDir="false" />
+    </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -39,9 +47,6 @@
         <option value="test" />
       </list>
     </option>
-  </component>
-  <component name="ProblemsViewState">
-    <option name="selectedIndex" value="1" />
   </component>
   <component name="ProjectId" id="2BPKpy3LJNBqdFjXu9DNQG9VAEO" />
   <component name="ProjectLevelVcsManager">
@@ -193,14 +198,34 @@
           <option name="timeStamp" value="22" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="java-line">
-          <url>file://$PROJECT_DIR$/src/main/java/com/bankmandiri/streamfailedpe/controller/UserController.java</url>
-          <line>43</line>
-          <option name="timeStamp" value="24" />
+          <url>file://$PROJECT_DIR$/src/main/java/com/bankmandiri/streamfailedpe/controller/PERegistrationController.java</url>
+          <line>170</line>
+          <option name="timeStamp" value="26" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="java-line">
-          <url>file://$PROJECT_DIR$/src/main/java/com/bankmandiri/streamfailedpe/controller/UserController.java</url>
-          <line>44</line>
-          <option name="timeStamp" value="25" />
+          <url>file://$PROJECT_DIR$/src/main/java/com/bankmandiri/streamfailedpe/controller/PERegistrationController.java</url>
+          <line>171</line>
+          <option name="timeStamp" value="27" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/src/main/java/com/bankmandiri/streamfailedpe/controller/PERegistrationController.java</url>
+          <line>172</line>
+          <option name="timeStamp" value="28" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/src/main/java/com/bankmandiri/streamfailedpe/controller/PERegistrationController.java</url>
+          <line>207</line>
+          <option name="timeStamp" value="42" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/src/main/java/com/bankmandiri/streamfailedpe/controller/PERegistrationController.java</url>
+          <line>208</line>
+          <option name="timeStamp" value="44" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/src/main/java/com/bankmandiri/streamfailedpe/controller/PERegistrationController.java</url>
+          <line>209</line>
+          <option name="timeStamp" value="45" />
         </line-breakpoint>
       </breakpoints>
     </breakpoint-manager>

@@ -10,7 +10,7 @@ public interface ElasticService {
 
 	ConsumerData getById(String data);
 
-	String deleteById(ConsumerData data);
+	String deleteById(String data);
 
 	List<ConsumerData> getListConsumerData();
 
