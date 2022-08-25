@@ -34,21 +34,35 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 //  @Override
 //  protected void configure(AuthenticationManagerBuilder auth) throws Exception {
 //    auth.inMemoryAuthentication()
-//            .withUser(rootUser)
-//            .password(rootPassword)
-//            .roles(Role.ADMIN.toString())
+//            .withUser("ADMIN")
+//            .password(passwordEncoder().encode("Helloword"))
+//            .roles("ADMIN")
 //            .and()
-//            .withUser("Zack")
-//            .password("aayush")
-//            .roles("admin_role")
-//            .and()
-//            .withUser("GFG")
-//            .password("Helloword")
-//            .roles("student");
+//            .withUser("CLIENT")
+//            .password(passwordEncoder().encode("Helloword"))
+//            .roles("CLIENT");
 //  }
 
   @Override
   protected void configure(HttpSecurity http) throws Exception {
+
+//    http.csrf().disable()
+//        .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS)
+//        .and()
+//        .authorizeRequests()
+//            .antMatchers("/delete").hasRole("ADMIN")
+//            .antMatchers("/details").hasAnyRole("ADMIN","CLIENT")
+//            .antMatchers("/stream-failed-pe/users/signup").hasRole("ADMIN")
+//        .and()
+//        .httpBasic()
+//        .and()
+//        .authorizeRequests()
+//            .antMatchers("/stream-failed-pe/users/signin").permitAll()
+//            .antMatchers("/stream-failed-pe/consumer-management/**").hasAnyRole("ADMIN","CLIENT")
+//            .antMatchers("/stream-failed-pe/pe-management/**").hasAnyRole("ADMIN","CLIENT")
+//            .anyRequest().authenticated()
+//        .and()
+//        .apply(new JwtTokenFilterConfigurer(jwtTokenProvider));
 
     // Disable CSRF (cross site request forgery)
     http.csrf().disable();
@@ -56,19 +70,17 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     // No session will be created or used by spring security
     http.sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS);
 
-    // Entry points
-    http.authorizeRequests()//
-            .antMatchers("/users/signin").permitAll()//
-            .antMatchers("/users/signup").hasRole(Role.ADMIN.toString())
-            .antMatchers("/delete").hasRole(Role.ADMIN.toString())
-            .antMatchers("/delete").hasRole("admin_role")
-            .antMatchers("/details").hasAnyRole("admin_role","student")
+    http.authorizeRequests()
+        .antMatchers("/delete").hasRole("ADMIN")
+        .antMatchers("/details").hasAnyRole("ADMIN","CLIENT")
+        .antMatchers("/stream-failed-pe/users/signup").hasRole("ADMIN")
+        .antMatchers("/stream-failed-pe/users/signin").permitAll()
 
-//        .antMatchers("/users/signup").hasRole("ADMIN")
-//        .antMatchers("/users/delete").hasRole("ADMIN")
-
-        .antMatchers("**/consumer-management").permitAll()
-
+            // Entry points
+//    http.authorizeRequests()//
+//        .antMatchers("/stream-failed-pe/users/signin").permitAll()//
+//        .antMatchers("/stream-failed-pe/consumer-management/").hasAnyRole("ADMIN","CLIENT")
+//        .antMatchers("/stream-failed-pe/pe-management/").hasAnyRole("ADMIN","CLIENT")
 
             // Disallow everything else..
         .anyRequest().authenticated();
@@ -78,6 +90,8 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 
     // Apply JWT
     http.apply(new JwtTokenFilterConfigurer(jwtTokenProvider));
+
+
 
     // Optional, if you want to test the API from a browser
     // http.httpBasic();

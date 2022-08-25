@@ -6,12 +6,8 @@
   <component name="ChangeListManager">
     <list default="true" id="3242b90b-a426-487a-94aa-f1c6c72fa48e" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/bankmandiri/streamfailedpe/controller/PERegistrationController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/bankmandiri/streamfailedpe/controller/PERegistrationController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/bankmandiri/streamfailedpe/security/JwtTokenProvider.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/bankmandiri/streamfailedpe/security/JwtTokenProvider.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/com/bankmandiri/streamfailedpe/security/WebSecurityConfig.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/bankmandiri/streamfailedpe/security/WebSecurityConfig.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/bankmandiri/streamfailedpe/services/ElasticService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/bankmandiri/streamfailedpe/services/ElasticService.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/bankmandiri/streamfailedpe/services/impl/ElasticServiceImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/bankmandiri/streamfailedpe/services/impl/ElasticServiceImpl.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/bankmandiri/streamfailedpe/validator/RequestValidator.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/bankmandiri/streamfailedpe/validator/RequestValidator.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/application-test.properties" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/application-test.properties" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -28,7 +24,7 @@
   <component name="Git.Settings">
     <option name="RECENT_BRANCH_BY_REPOSITORY">
       <map>
-        <entry key="$PROJECT_DIR$" value="java8-containerListener" />
+        <entry key="$PROJECT_DIR$" value="JWT&amp;UserElasticSearch" />
       </map>
     </option>
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
@@ -40,13 +36,6 @@
       <filtered-out-file-type name="TAG" />
       <filtered-out-file-type name="COMMIT_BY_MESSAGE" />
     </file-type-list>
-  </component>
-  <component name="MavenImportPreferences">
-    <option name="enabledProfiles">
-      <list>
-        <option value="test" />
-      </list>
-    </option>
   </component>
   <component name="ProjectId" id="2BPKpy3LJNBqdFjXu9DNQG9VAEO" />
   <component name="ProjectLevelVcsManager">
@@ -84,6 +73,7 @@
   <component name="RunAnythingCache">
     <option name="myCommands">
       <command value="mvn clean package" />
+      <command value="mvn clean" />
     </option>
   </component>
   <component name="RunManager">
@@ -178,26 +168,6 @@
           <option name="timeStamp" value="18" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="java-line">
-          <url>file://$PROJECT_DIR$/src/main/java/com/bankmandiri/streamfailedpe/security/WebSecurityConfig.java</url>
-          <line>35</line>
-          <option name="timeStamp" value="19" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" type="java-line">
-          <url>file://$PROJECT_DIR$/src/main/java/com/bankmandiri/streamfailedpe/security/WebSecurityConfig.java</url>
-          <line>36</line>
-          <option name="timeStamp" value="20" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" type="java-line">
-          <url>file://$PROJECT_DIR$/src/main/java/com/bankmandiri/streamfailedpe/security/WebSecurityConfig.java</url>
-          <line>37</line>
-          <option name="timeStamp" value="21" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" type="java-line">
-          <url>file://$PROJECT_DIR$/src/main/java/com/bankmandiri/streamfailedpe/security/WebSecurityConfig.java</url>
-          <line>38</line>
-          <option name="timeStamp" value="22" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" type="java-line">
           <url>file://$PROJECT_DIR$/src/main/java/com/bankmandiri/streamfailedpe/controller/PERegistrationController.java</url>
           <line>170</line>
           <option name="timeStamp" value="26" />
@@ -226,6 +196,57 @@
           <url>file://$PROJECT_DIR$/src/main/java/com/bankmandiri/streamfailedpe/controller/PERegistrationController.java</url>
           <line>209</line>
           <option name="timeStamp" value="45" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/src/main/java/com/bankmandiri/streamfailedpe/utils/InitUser.java</url>
+          <line>21</line>
+          <option name="timeStamp" value="49" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/src/main/java/com/bankmandiri/streamfailedpe/utils/InitUser.java</url>
+          <line>24</line>
+          <option name="timeStamp" value="51" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/src/main/java/com/bankmandiri/streamfailedpe/config/CORSConfig.java</url>
+          <line>12</line>
+          <option name="timeStamp" value="66" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-field">
+          <url>file://$PROJECT_DIR$/src/main/java/com/bankmandiri/streamfailedpe/utils/InitUser.java</url>
+          <line>22</line>
+          <properties field="rootUser" class="com.bankmandiri.streamfailedpe.utils.InitUser" />
+          <option name="timeStamp" value="50" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-field">
+          <url>file://$PROJECT_DIR$/src/main/java/com/bankmandiri/streamfailedpe/utils/InitUser.java</url>
+          <line>25</line>
+          <properties field="rootPassword" class="com.bankmandiri.streamfailedpe.utils.InitUser" />
+          <option name="timeStamp" value="52" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-field">
+          <url>file://$PROJECT_DIR$/src/main/java/com/bankmandiri/streamfailedpe/config/ElasticConfig.java</url>
+          <line>21</line>
+          <properties field="port" class="com.bankmandiri.streamfailedpe.config.ElasticConfig" />
+          <option name="timeStamp" value="57" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-field">
+          <url>file://$PROJECT_DIR$/src/main/java/com/bankmandiri/streamfailedpe/config/ElasticConfig.java</url>
+          <line>18</line>
+          <properties field="host" class="com.bankmandiri.streamfailedpe.config.ElasticConfig" />
+          <option name="timeStamp" value="58" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-field">
+          <url>file://$PROJECT_DIR$/src/main/java/com/bankmandiri/streamfailedpe/config/ElasticConfig.java</url>
+          <line>24</line>
+          <properties field="userName" class="com.bankmandiri.streamfailedpe.config.ElasticConfig" />
+          <option name="timeStamp" value="59" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-field">
+          <url>file://$PROJECT_DIR$/src/main/java/com/bankmandiri/streamfailedpe/config/ElasticConfig.java</url>
+          <line>27</line>
+          <properties field="password" class="com.bankmandiri.streamfailedpe.config.ElasticConfig" />
+          <option name="timeStamp" value="61" />
         </line-breakpoint>
       </breakpoints>
     </breakpoint-manager>
